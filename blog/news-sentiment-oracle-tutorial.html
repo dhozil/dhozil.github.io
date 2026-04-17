@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build a News Sentiment Oracle on GenLayer — Tutorial - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .intro-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .intro-box strong {
+    color: #3fb950;
+  }
+
+  .use-case {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #58a6ff;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .use-case h4 {
+    color: #58a6ff;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+
+  .tips {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #d29922;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .tips h4 {
+    color: #d29922;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <article class="blog-post">
+    <h1>Build a News Sentiment Oracle on GenLayer — Tutorial</h1>
+    <div class="meta">Posted on March 27, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Tutorial</span> <span style="color: #8b949e;">Oracle</span></div>
+
+    <div class="intro-box">
+      <p><strong>What we're building:</strong> An Intelligent Contract that fetches live news, analyzes sentiment, and stores the result on-chain — all without a centralized oracle.</p>
+      <p style="margin-top: 12px;"><strong>Why this is powerful:</strong> Traditional smart contracts cannot read news. GenLayer contracts can — and multiple AI validators independently verify the sentiment before reaching consensus.</p>
+    </div>
+
+    <hr>
+
+    <h2>Prerequisites</h2>
+
+    <ul>
+      <li>GenLayer Studio account at <a href="https://studio.genlayer.com">studio.genlayer.com</a></li>
+      <li>Connected To Genlayer Studio Network</li>
+      <li>Test GEN tokens (use the Faucet)</li>
+    </ul>
+
+    <hr>
+
+    <h2>Step 1: Create the Contract</h2>
+
+    <p>Open Studio → click "+" → name it <code>news_sentiment_oracle.py</code></p>
+
+    <p>Paste this code:</p>
+
+    <pre><code># v0.1.0
+# { "Depends": "py-genlayer:15qfivjvy80800rh998pcxmd2m8va1wq2qzqhz850n8ggcr4i9q0" }
+from genlayer import *
+import json
+
+
+class NewsSentimentOracle(gl.Contract):
+    """
+    News Sentiment Oracle — Intelligent Contract
+
+    Fetches live news about any topic and analyzes sentiment on-chain.
+    AI validators independently fetch and evaluate news, then reach
+    consensus on whether the sentiment is bullish, bearish, or neutral.
+
+    Real-world use cases:
+    - Trigger DeFi trades based on news sentiment
+    - DAO governance — only execute proposal if community sentiment is positive
+    - Prediction markets — resolve based on news coverage
+    - Risk management — pause protocol if negative news detected
+    """
+    topic: str
+    sentiment: str
+    confidence: str
+    headline: str
+    last_updated: str
+
+    def __init__(self):
+        self.topic = ""
+        self.sentiment = "unknown"
+        self.confidence = ""
+        self.headline = ""
+        self.last_updated = ""
+
+    @gl.public.write
+    def analyze_sentiment(self, topic: str) -> None:
+        """
+        Fetch latest news about a topic and analyze sentiment.
+
+        Args:
+            topic: Any topic e.g. "bitcoin", "ethereum", "GenLayer", "Apple stock"
+        """
+        def fetch():
+            url = "https://news.google.com/search?q=" + topic + "&hl=en"
+            return gl.get_webpage(url, mode="text")
+
+        result = gl.eq_principles.eq_principle_prompt_non_comparative(
+            fetch,
+            task="Read the latest news headlines about " + topic + ". Analyze the overall sentiment. Is the news mostly positive/bullish, negative/bearish, or neutral? Also extract the single most important headline. Respond with: sentiment|confidence|headline. Example: bullish|high|Bitcoin hits new all-time high as institutional demand surges",
+            criteria="Answer must follow format: sentiment|confidence|headline where sentiment is bullish, bearish, or neutral, and confidence is high, medium, or low."
+        )
+
+        parts = str(result).strip().split("|")
+        if len(parts) >= 3:
+            self.sentiment = parts[0].strip().lower()
+            self.confidence = parts[1].strip().lower()
+            self.headline = parts[2].strip()
+        else:
+            self.sentiment = str(result).strip()
+            self.confidence = "low"
+            self.headline = "unable to extract"
+
+        self.topic = topic
+        self.last_updated = "latest"
+
+    @gl.public.write
+    def check_bullish(self, topic: str) -> None:
+        """
+        Simple bullish check — useful for triggering contract logic.
+        Sets sentiment to 'true' if bullish, 'false' otherwise.
+
+        Args:
+            topic: Topic to check e.g. "bitcoin", "ethereum"
+        """
+        def fetch():
+            url = "https://news.google.com/search?q=" + topic + "&hl=en"
+            return gl.get_webpage(url, mode="text")
+
+        result = gl.eq_principles.eq_principle_prompt_non_comparative(
+            fetch,
+            task="Based on the latest news headlines about " + topic + ", is the overall sentiment bullish/positive? Respond only: true or false",
+            criteria="Answer must be exactly: true or false"
+        )
+        self.topic = topic
+        self.sentiment = str(result).strip().lower()
+        self.confidence = "high"
+        self.headline = ""
+
+    @gl.public.view
+    def get_sentiment(self) -> str:
+        return self.sentiment
+
+    @gl.public.view
+    def get_confidence(self) -> str:
+        return self.confidence
+
+    @gl.public.view
+    def get_headline(self) -> str:
+        return self.headline
+
+    @gl.public.view
+    def get_topic(self) -> str:
+        return self.topic</code></pre>
+
+    <hr>
+
+    <h2>Step 2: Deploy</h2>
+
+    <p>Click Deploy — no parameters needed. Wait for Finalized status.</p>
+
+    <p>Save your Transaction Hash.</p>
+
+    <hr>
+
+    <h2>Step 3: Analyze News Sentiment</h2>
+
+    <p>Call <code>analyze_sentiment</code> (Write method):</p>
+    <p>topic → "bitcoin"</p>
+
+    <p>Wait for Finalized (~30-60 seconds).</p>
+
+    <p>Then call <code>get_sentiment</code> (Read):</p>
+    <p>Result: "bullish" or "bearish" or "neutral"</p>
+
+    <p>Call <code>get_headline</code> (Read) to see the top news headline that influenced the verdict.</p>
+
+    <hr>
+
+    <h2>Step 4: Use the Binary Check</h2>
+
+    <p>For contract logic that needs a simple true/false trigger, call <code>check_bullish</code>:</p>
+    <p>topic → "ethereum"</p>
+
+    <p>Then get_sentiment returns "true" or "false" — ready to use in conditional logic.</p>
+
+    <hr>
+
+    <h2>How It Works Under the Hood</h2>
+
+    <ol style="margin-left: 24px; color: #c9d1d9; line-height: 2;">
+      <li style="margin-bottom: 12px;">You call analyze_sentiment("bitcoin")</li>
+      <li style="margin-bottom: 12px;">Each GenLayer validator independently:<br>
+        → Fetches Google News for "bitcoin"<br>
+        → Sends content to their LLM<br>
+        → LLM evaluates sentiment</li>
+      <li style="margin-bottom: 12px;">Validators compare results via Equivalence Principle<br>
+        → If majority agree → consensus reached<br>
+        → Result stored on-chain</li>
+      <li>You read get_sentiment() → "bullish"</li>
+    </ol>
+
+    <p><strong>No oracle. No trusted third party. Just AI validators reaching consensus.</strong></p>
+
+    <hr>
+
+    <h2>Real-World Use Cases</h2>
+
+    <div class="use-case">
+      <h4>DeFi Trading Trigger:</h4>
+      <p>Execute trade only if Bitcoin sentiment is bullish</p>
+      <pre><code>if oracle.get_sentiment() == "bullish":
+    execute_buy_order()</code></pre>
+    </div>
+
+    <div class="use-case">
+      <h4>DAO Governance:</h4>
+      <p>Only pass proposal if community sentiment is positive</p>
+      <pre><code>if oracle.get_sentiment() != "bearish":
+    pass_proposal()</code></pre>
+    </div>
+
+    <div class="use-case">
+      <h4>Risk Management:</h4>
+      <p>Pause protocol if negative news detected</p>
+      <pre><code>if oracle.get_sentiment() == "bearish" and oracle.get_confidence() == "high":
+    pause_protocol()</code></pre>
+    </div>
+
+    <hr>
+
+    <div class="tips">
+      <h4>Tips</h4>
+      <ul>
+        <li>Use <code>check_bullish</code> for contract logic — simpler and reaches consensus faster</li>
+        <li>Use <code>analyze_sentiment</code> when you need the headline as evidence</li>
+        <li>If validators disagree → retry, it usually resolves on 2nd attempt</li>
+        <li>Try different topics: "ethereum", "GenLayer", "AI stocks", "Fed interest rates"</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>Built as part of the GenLayer Incentivized Builder Program.</em>
+    </p>
+  </article>
+
+</body>
+</html>

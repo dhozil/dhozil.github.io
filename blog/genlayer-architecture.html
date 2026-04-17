@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenLayer Architecture, Layer by Layer - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post .subtitle {
+    font-size: 1.25rem;
+    color: #8b949e;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .note {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  /* Architecture Interactive Styles */
+  .arch-wrap {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 1.5rem 0;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .arch-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8b949e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .layer {
+    border-radius: 10px;
+    border: 1.5px solid;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .layer:hover {
+    transform: translateX(4px);
+  }
+
+  .layer-header {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .layer-icon {
+    font-size: 20px;
+  }
+
+  .layer-info {
+    flex: 1;
+  }
+
+  .layer-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .layer-sub {
+    font-size: 11px;
+    margin-top: 1px;
+  }
+
+  .layer-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .layer-toggle {
+    font-size: 12px;
+    color: #8b949e;
+    transition: transform 0.2s;
+  }
+
+  .layer.open .layer-toggle {
+    transform: rotate(180deg);
+  }
+
+  .layer-body {
+    padding: 0 16px 14px;
+    display: none;
+  }
+
+  .layer.open .layer-body {
+    display: block;
+  }
+
+  .l-user {
+    border-color: #30363d;
+  }
+
+  .l-user .layer-header {
+    background: #21262d;
+  }
+
+  .l-user .layer-name {
+    color: #58a6ff;
+  }
+
+  .l-user .layer-sub {
+    color: #8b949e;
+  }
+
+  .l-user .layer-badge {
+    background: #21262d;
+    border-color: #30363d;
+    color: #58a6ff;
+  }
+
+  .l-sdk {
+    border-color: #30363d;
+  }
+
+  .l-sdk .layer-header {
+    background: #21262d;
+  }
+
+  .l-sdk .layer-name {
+    color: #3fb950;
+  }
+
+  .l-sdk .layer-sub {
+    color: #8b949e;
+  }
+
+  .l-sdk .layer-badge {
+    background: #21262d;
+    border-color: #30363d;
+    color: #3fb950;
+  }
+
+  .l-node {
+    border-color: #30363d;
+  }
+
+  .l-node .layer-header {
+    background: #21262d;
+  }
+
+  .l-node .layer-name {
+    color: #d29922;
+  }
+
+  .l-node .layer-sub {
+    color: #8b949e;
+  }
+
+  .l-node .layer-badge {
+    background: #21262d;
+    border-color: #30363d;
+    color: #d29922;
+  }
+
+  .l-val {
+    border-color: #30363d;
+  }
+
+  .l-val .layer-header {
+    background: #21262d;
+  }
+
+  .l-val .layer-name {
+    color: #a371f7;
+  }
+
+  .l-val .layer-sub {
+    color: #8b949e;
+  }
+
+  .l-val .layer-badge {
+    background: #21262d;
+    border-color: #30363d;
+    color: #a371f7;
+  }
+
+  .l-vm {
+    border-color: #30363d;
+  }
+
+  .l-vm .layer-header {
+    background: #21262d;
+  }
+
+  .l-vm .layer-name {
+    color: #f85149;
+  }
+
+  .l-vm .layer-sub {
+    color: #8b949e;
+  }
+
+  .l-vm .layer-badge {
+    background: #21262d;
+    border-color: #30363d;
+    color: #f85149;
+  }
+
+  .l-ext {
+    border-color: #30363d;
+  }
+
+  .l-ext .layer-header {
+    background: #21262d;
+  }
+
+  .l-ext .layer-name {
+    color: #2ea043;
+  }
+
+  .l-ext .layer-sub {
+    color: #8b949e;
+  }
+
+  .l-ext .layer-badge {
+    background: #21262d;
+    border-color: #30363d;
+    color: #2ea043;
+  }
+
+  .connector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: -4px 0;
+    position: relative;
+    z-index: 1;
+    padding: 2px 0;
+  }
+
+  .conn-line {
+    height: 2px;
+    width: 40px;
+  }
+
+  .conn-label {
+    font-size: 9px;
+    font-weight: 500;
+    padding: 1px 6px;
+    border-radius: 999px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+
+  .body-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .body-item {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .body-item-title {
+    font-weight: 600;
+    color: #c9d1d9;
+    margin-bottom: 3px;
+  }
+
+  .body-item-desc {
+    color: #8b949e;
+    line-height: 1.5;
+  }
+
+  .val-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  .val-card {
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+    border: 1px solid;
+    background: #21262d;
+  }
+
+  .val-card-model {
+    font-size: 10px;
+    font-weight: 600;
+    color: #c9d1d9;
+  }
+
+  .val-card-prov {
+    font-size: 9px;
+    color: #8b949e;
+    margin-top: 1px;
+  }
+
+  .vc1 {
+    border-color: #30363d;
+  }
+
+  .vc2 {
+    border-color: #30363d;
+  }
+
+  .vc3 {
+    border-color: #30363d;
+  }
+
+  .vc4 {
+    border-color: #30363d;
+  }
+
+  .ext-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .ext-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid;
+    font-size: 11px;
+    background: #21262d;
+  }
+
+  .ext-web {
+    border-color: #30363d;
+    color: #58a6ff;
+  }
+
+  .ext-llm {
+    border-color: #30363d;
+    color: #3fb950;
+  }
+
+  .ext-chain {
+    border-color: #30363d;
+    color: #d29922;
+  }
+
+  .code-block {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 10px;
+    margin-top: 8px;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+
+  .kw {
+    color: #ff7b72;
+    font-weight: 500;
+  }
+
+  .fn {
+    color: #d2a8ff;
+  }
+
+  .str {
+    color: #a5d6ff;
+  }
+
+  .cm {
+    color: #8b949e;
+  }
+
+  .hint {
+    text-align: center;
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+
+    .body-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .val-grid {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <article class="blog-post">
+    <h1>GenLayer Architecture, Layer by Layer</h1>
+    <div class="meta">Posted on April 7, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Architecture</span> <span style="color: #8b949e;">Technical</span></div>
+    <p class="subtitle">A visual walkthrough of how everything connects — from your dApp frontend down to the external world of LLMs and live web data.</p>
+
+    <hr>
+
+    <h2>Why architecture matters</h2>
+
+    <p>
+      Most developer docs jump straight to "here's how to write a contract." That's fine if you already have a mental model of what's happening under the hood. But if you don't, you end up with a lot of confusion about why things behave the way they do.
+    </p>
+
+    <p>
+      Why does it take 38 seconds for a simple contract to finalize? Why can't you just call an LLM from anywhere in your code? Why does changing the equivalence principle affect performance?
+    </p>
+
+    <p>
+      These questions make a lot more sense once you understand the architecture. GenLayer is built in layers — here's what each one does.
+    </p>
+
+    <hr>
+
+    <h2>The full stack</h2>
+
+    <div class="arch-wrap">
+      <div class="arch-title">GenLayer Architecture — How Everything Connects</div>
+
+      <div class="layer l-user" onclick="toggleLayer(this)">
+        <div class="layer-header">
+          <div class="layer-icon">👤</div>
+          <div class="layer-info">
+            <div class="layer-name">User / dApp Frontend</div>
+            <div class="layer-sub">Web browser, mobile app, or server-side client</div>
+          </div>
+          <div class="layer-badge">Entry point</div>
+          <div class="layer-toggle">▼</div>
+        </div>
+        <div class="layer-body">
+          <div class="body-grid">
+            <div class="body-item">
+              <div class="body-item-title">Connect wallet</div>
+              <div class="body-item-desc">MetaMask or any EVM-compatible wallet signs transactions</div>
+            </div>
+            <div class="body-item">
+              <div class="body-item-title">Read state</div>
+              <div class="body-item-desc">Query contract storage via view methods — instant, no gas</div>
+            </div>
+            <div class="body-item">
+              <div class="body-item-title">Write transactions</div>
+              <div class="body-item-desc">Submit signed transactions that trigger contract execution</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="conn-line" style="background:#30363d"></div>
+        <div class="conn-label" style="background:#21262d;border-color:#30363d;color:#58a6ff">JSON-RPC calls</div>
+        <div class="conn-line" style="background:#30363d"></div>
+      </div>
+
+      <div class="layer l-sdk" onclick="toggleLayer(this)">
+        <div class="layer-header">
+          <div class="layer-icon">📦</div>
+          <div class="layer-info">
+            <div class="layer-name">GenLayerJS SDK / GenLayer CLI</div>
+            <div class="layer-sub">TypeScript SDK for frontends · CLI for deployment & management</div>
+          </div>
+          <div class="layer-badge">Developer tooling</div>
+          <div class="layer-toggle">▼</div>
+        </div>
+        <div class="layer-body">
+          <div class="code-block"><span class="kw">import</span> { createClient } <span class="kw">from</span> <span class="str">'genlayer-js'</span>
+
+<span class="kw">const</span> client = createClient({ chain: studionet })
+
+<span class="cm">// Read (instant)</span>
+<span class="kw">const</span> result = <span class="kw">await</span> client.<span class="fn">readContract</span>({ address, functionName: <span class="str">'get_data'</span>, args: [] })
+
+<span class="cm">// Write (goes through consensus)</span>
+<span class="kw">const</span> hash = <span class="kw">await</span> client.<span class="fn">writeContract</span>({ address, functionName: <span class="str">'update'</span>, args: [value] })
+<span class="kw">await</span> client.<span class="fn">waitForTransactionReceipt</span>({ hash, status: <span class="str">'FINALIZED'</span> })</div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="conn-line" style="background:#30363d"></div>
+        <div class="conn-label" style="background:#21262d;border-color:#30363d;color:#3fb950">HTTP / WebSocket</div>
+        <div class="conn-line" style="background:#30363d"></div>
+      </div>
+
+      <div class="layer l-node" onclick="toggleLayer(this)">
+        <div class="layer-header">
+          <div class="layer-icon">🖥️</div>
+          <div class="layer-info">
+            <div class="layer-name">GenLayer Node (JSON-RPC API)</div>
+            <div class="layer-sub">Receives transactions · coordinates validator selection · manages state</div>
+          </div>
+          <div class="layer-badge">Network layer</div>
+          <div class="layer-toggle">▼</div>
+        </div>
+        <div class="layer-body">
+          <div class="body-grid">
+            <div class="body-item">
+              <div class="body-item-title">gen_call</div>
+              <div class="body-item-desc">Read contract state without modifying it</div>
+            </div>
+            <div class="body-item">
+              <div class="body-item-title">eth_sendTransaction</div>
+              <div class="body-item-desc">Submit write transactions to the network</div>
+            </div>
+            <div class="body-item">
+              <div class="body-item-title">gen_getTransactionReceipt</div>
+              <div class="body-item-desc">Poll for transaction status: PENDING → ACCEPTED → FINALIZED</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="conn-line" style="background:#30363d"></div>
+        <div class="conn-label" style="background:#21262d;border-color:#30363d;color:#d29922">Validator selection (random)</div>
+        <div class="conn-line" style="background:#30363d"></div>
+      </div>
+
+      <div class="layer l-val" onclick="toggleLayer(this)">
+        <div class="layer-header">
+          <div class="layer-icon">🔷</div>
+          <div class="layer-info">
+            <div class="layer-name">Validator Network</div>
+            <div class="layer-sub">Staked participants running diverse LLM models · apply equivalence principle</div>
+          </div>
+          <div class="layer-badge">Consensus layer</div>
+          <div class="layer-toggle">▼</div>
+        </div>
+        <div class="layer-body">
+          <div class="val-grid">
+            <div class="val-card vc1"><div class="val-card-model">GPT-5.2</div><div class="val-card-prov">openrouter</div></div>
+            <div class="val-card vc2"><div class="val-card-model">Claude 4.5</div><div class="val-card-prov">openrouter</div></div>
+            <div class="val-card vc3"><div class="val-card-model">Gemini 3</div><div class="val-card-prov">openrouter</div></div>
+            <div class="val-card vc4"><div class="val-card-model">DeepSeek V3</div><div class="val-card-prov">ionet</div></div>
+          </div>
+          <div style="font-size:11px;color:#8b949e;margin-top:10px;line-height:1.6">
+            One validator is randomly selected as the <strong>Leader</strong> — executes the contract and proposes output. Others apply the Equivalence Principle to agree or disagree. Majority consensus → transaction accepted.
+          </div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="conn-line" style="background:#30363d"></div>
+        <div class="conn-label" style="background:#21262d;border-color:#30363d;color:#a371f7">Contract execution</div>
+        <div class="conn-line" style="background:#30363d"></div>
+      </div>
+
+      <div class="layer l-vm" onclick="toggleLayer(this)">
+        <div class="layer-header">
+          <div class="layer-icon">⚙️</div>
+          <div class="layer-info">
+            <div class="layer-name">GenVM (Python Runtime)</div>
+            <div class="layer-sub">Executes Intelligent Contracts · sandboxed Python environment</div>
+          </div>
+          <div class="layer-badge">Execution layer</div>
+          <div class="layer-toggle">▼</div>
+        </div>
+        <div class="layer-body">
+          <div class="body-grid">
+            <div class="body-item">
+              <div class="body-item-title">Python contracts</div>
+              <div class="body-item-desc">Full Python with genlayer stdlib — familiar to millions of developers</div>
+            </div>
+            <div class="body-item">
+              <div class="body-item-title">Deterministic mode</div>
+              <div class="body-item-desc">Pure Python logic runs identically on all validators</div>
+            </div>
+            <div class="body-item">
+              <div class="body-item-title">Non-deterministic mode</div>
+              <div class="body-item-desc">gl.nondet.* calls are sandboxed — results go through eq. principle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector">
+        <div class="conn-line" style="background:#30363d"></div>
+        <div class="conn-label" style="background:#21262d;border-color:#30363d;color:#2ea043">External calls</div>
+        <div class="conn-line" style="background:#30363d"></div>
+      </div>
+
+      <div class="layer l-ext" onclick="toggleLayer(this)">
+        <div class="layer-header">
+          <div class="layer-icon">🌐</div>
+          <div class="layer-info">
+            <div class="layer-name">External World</div>
+            <div class="layer-sub">The internet, AI models, and other blockchains — accessed trustlessly</div>
+          </div>
+          <div class="layer-badge">Data sources</div>
+          <div class="layer-toggle">▼</div>
+        </div>
+        <div class="layer-body">
+          <div class="ext-row">
+            <div class="ext-chip ext-web">🌐 Web data — gl.nondet.web.get(url)</div>
+            <div class="ext-chip ext-llm">🤖 LLM inference — gl.nondet.exec_prompt()</div>
+            <div class="ext-chip ext-chain">⛓ EVM contracts — gl.evm.contract_interface()</div>
+          </div>
+          <div style="font-size:11px;color:#8b949e;margin-top:10px;line-height:1.6">
+            Unlike traditional blockchains that need oracles, GenLayer contracts access these directly — no trusted intermediary required. The Equivalence Principle handles the non-determinism that comes from live data.
+          </div>
+        </div>
+      </div>
+
+      <div class="hint">Click each layer to expand · Scroll down to see the full stack</div>
+    </div>
+
+    <hr>
+
+    <h2>Layer 1 — The user / dApp frontend</h2>
+
+    <p>
+      This is where your users interact. A web app, mobile app, or even a CLI. From the user's perspective, they connect a wallet, read contract state, and submit transactions.
+    </p>
+
+    <p>
+      The key distinction: <strong>reading is instant, writing is not.</strong> Reading contract state (view methods) is a direct query — no consensus needed, returns immediately. Writing triggers the full consensus flow and takes 30–60+ seconds.
+    </p>
+
+    <p>
+      Design your UX around this. If your app needs to show the result of a write transaction, you'll need polling or WebSocket updates — don't expect a synchronous response.
+    </p>
+
+    <hr>
+
+    <h2>Layer 2 — GenLayerJS SDK / GenLayer CLI</h2>
+
+    <p>
+      The SDK abstracts the raw JSON-RPC calls into a clean TypeScript API:
+    </p>
+
+    <pre>import { createClient } from 'genlayer-js'
+
+const client = createClient({ chain: studionet })
+
+// Read — instant, no gas
+const data = await client.readContract({
+    address: contractAddress,
+    functionName: 'get_stats',
+    args: [userAddress]
+})
+
+// Write — triggers consensus, takes time
+const hash = await client.writeContract({
+    address: contractAddress,
+    functionName: 'cast',
+    args: []
+})
+
+// Poll until finalized
+const receipt = await client.waitForTransactionReceipt({
+    hash,
+    status: 'FINALIZED'
+})</pre>
+
+    <hr>
+
+    <h2>Layer 3 — GenLayer Node</h2>
+
+    <p>
+      The node is the entry point to the network. It receives transactions, coordinates validator selection, manages the mempool, and exposes the JSON-RPC interface.
+    </p>
+
+    <p>
+      The node is also responsible for <strong>validator selection</strong> — when a transaction comes in, it randomly picks a group of validators from the active pool to process it. This randomness is a core security property.
+    </p>
+
+    <hr>
+
+    <h2>Layer 4 — The validator network</h2>
+
+    <p>
+      Validators are participants who stake tokens to earn the right to validate transactions. They run GenVM with a connected LLM provider. Currently on Studio testnet, 115 validators run simultaneously across 8 different models — GPT-5.2, Claude Sonnet 4.5, Gemini 3 Flash, DeepSeek V3.2, Llama 4 Maverick, and others.
+    </p>
+
+    <p>
+      The diversity of models is intentional. If all validators ran the same LLM, a single model's biases or errors could consistently dominate consensus. Running different models reduces correlation risk.
+    </p>
+
+    <hr>
+
+    <h2>Layer 5 — GenVM (Python runtime)</h2>
+
+    <p>
+      GenVM is the execution environment where your Intelligent Contract runs. It's a sandboxed Python runtime that supports two modes:
+    </p>
+
+    <p>
+      <strong>Deterministic mode</strong> — regular Python code. Runs identically on all validators. No surprises.
+    </p>
+
+    <p>
+      <strong>Non-deterministic mode</strong> — calls through <code>gl.nondet.*</code>. These are sandboxed and their outputs go through the Equivalence Principle before validators can agree.
+    </p>
+
+    <pre># { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
+
+from genlayer import *
+
+class MyContract(gl.Contract):
+    data: TreeMap[str, str]   # not dict — TreeMap for persistent storage
+
+    def __init__(self):
+        self.data = TreeMap[str, str]()
+
+    @gl.public.view
+    def get(self, key: str) -> str:
+        return self.data.get(key, "")
+
+    @gl.public.write
+    def set(self, key: str, value: str) -> None:
+        self.data[key] = value</pre>
+
+    <div class="note">
+      Persistent storage uses <code>TreeMap[K, V]</code> and <code>DynArray[T]</code>, not Python's native <code>dict</code> and <code>list</code>. All persistent fields must be declared at the class level with type annotations.
+    </div>
+
+    <hr>
+
+    <h2>Layer 6 — The external world</h2>
+
+    <p>
+      Unlike traditional smart contracts, GenLayer's Intelligent Contracts can reach outside the blockchain:
+    </p>
+
+    <p>
+      <strong>Web data</strong> — <code>gl.nondet.web.get(url)</code> fetches live HTTP data. No oracle required.
+    </p>
+    <p>
+      <strong>LLM inference</strong> — <code>gl.nondet.exec_prompt(prompt)</code> calls an LLM through the validator's configured provider.
+    </p>
+    <p>
+      <strong>EVM contracts</strong> — <code>gl.evm.contract_interface()</code> lets you interact with Ethereum-compatible contracts on other chains.
+    </p>
+
+    <p>
+      All of these go through <code>gl.nondet.*</code> because they're non-deterministic. The Equivalence Principle is what makes it safe to use them in a consensus-based system.
+    </p>
+
+    <hr>
+
+    <h2>Putting it all together — a real example</h2>
+
+    <p>
+      Here's what happens when a user clicks "Cast" in a fishing game built on GenLayer:
+    </p>
+
+    <p>1. Frontend calls <code>client.writeContract({ functionName: 'cast', args: [] })</code></p>
+    <p>2. SDK sends a signed transaction to the GenLayer Node via JSON-RPC</p>
+    <p>3. Node selects 5 validators randomly; designates one as Leader</p>
+    <p>4. Leader's GenVM instance executes the <code>cast()</code> function</p>
+    <p>5. Since we use deterministic randomness (no LLM), all validators agree immediately</p>
+    <p>6. Majority consensus → ACCEPTED</p>
+    <p>7. Finality window passes with no appeal → FINALIZED</p>
+    <p>8. Frontend polls <code>waitForTransactionReceipt</code> and updates the UI</p>
+
+    <p>
+      That full flow takes about 38–45 seconds. Most of that is steps 4–7 — validators independently executing and voting.
+    </p>
+
+    <hr>
+
+    <h2>What this means for how you build</h2>
+
+    <p>
+      <strong>Separate reads from writes.</strong> View functions are fast and free. Design your data model so the UI can display state via reads, and only trigger writes for actual state changes.
+    </p>
+
+    <p>
+      <strong>Non-deterministic calls add latency.</strong> Each <code>gl.nondet.*</code> call adds overhead because validators need to independently resolve it. Use them only when you actually need external data or AI judgment.
+    </p>
+
+    <p>
+      <strong>Test locally before deploying.</strong> GLSim starts in about 1 second and doesn't require Docker. Use direct mode for rapid iteration, GLSim for integration testing, Studio for final validation before testnet.
+    </p>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>This is part of a series of visual guides to GenLayer's core concepts. Previous pieces covered Optimistic Democracy and the Equivalence Principle.</em>
+    </p>
+  </article>
+
+<script>
+function toggleLayer(el) {
+  el.classList.toggle('open');
+}
+// Open first layer by default
+document.querySelector('.layer').classList.add('open');
+</script>
+
+</body>
+</html>

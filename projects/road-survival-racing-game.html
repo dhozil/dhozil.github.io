@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Survival - Multiplayer Racing Game - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .featured-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0 32px 0;
+    object-fit: cover;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .feature-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .feature-box h3 {
+    color: #3fb950;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .play-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(63, 185, 80, 0.3);
+    margin: 24px 0;
+  }
+
+  .play-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(63, 185, 80, 0.4);
+  }
+
+  .tech-stack {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+  }
+
+  .tech-stack h3 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 1.2rem;
+  }
+
+  .github-note {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    text-align: center;
+  }
+
+  .github-note h3 {
+    color: #d29922;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .github-note a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .github-note a:hover {
+    color: #00f0ff;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html" class="active">Builder Projects</a>
+    <a href="../blog.html">Blog</a>
+  </nav>
+
+  <a href="../builder-projects.html" class="back-link">← Back to Builder Projects</a>
+
+  <article class="blog-post">
+    <h1>Road Survival - Multiplayer Racing Game</h1>
+    <div class="meta">Posted on April 14, 2026 • Tags: <span style="color: #8b949e;">Game</span> <span style="color: #8b949e;">React</span> <span style="color: #8b949e;">GenLayer</span></div>
+
+    <img src="../assets/Road-Survival.png" alt="Road Survival" class="featured-image" onerror="this.style.display='none'">
+
+    <p>
+      <strong>Road Survival</strong> is an advanced multiplayer racing game built with React and integrated with GenLayer blockchain. Featuring real-time multiplayer racing, diverse car selection, and immersive gameplay with sound effects and realistic environments.
+    </p>
+
+    <hr>
+
+    <h2>Key Features</h2>
+
+    <div class="feature-box">
+      <h3>🎮 Game Modes</h3>
+      <p><strong>Multiplayer</strong> - Real-time racing with other players</p>
+      <p><strong>Solo Practice</strong> - Training mode to improve skills</p>
+      <p><strong>Room System</strong> - Create/join custom game rooms</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>🚗 Car Selection System</h3>
+      <p><strong>9 Unique Car Types</strong>: Sports, SUV, Sedan, Hatchback, Muscle, Truck, Racing, F1, Luxury</p>
+      <p><strong>Different Car Shapes</strong>: Each car type has unique visual design (F1 with nose cone & wings, SUV taller & boxier, Truck longer with bed, etc.)</p>
+      <p><strong>Color Variations</strong>: Each car type has distinct color scheme</p>
+      <p><strong>Live Preview</strong>: See car preview before selecting</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>🔊 Sound Effects</h3>
+      <p><strong>Engine Sound</strong>: Dynamic engine sound that changes based on speed</p>
+      <p><strong>Collision Sound</strong>: Impact sound when crashing into enemy cars</p>
+      <p><strong>Web Audio API</strong>: High-quality synthesized sounds without external files</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>🌲 Realistic Environment</h3>
+      <p><strong>Dynamic Scenery</strong>: Trees, buildings, and mountains on both sides of the road</p>
+      <p><strong>Moving Background</strong>: Scenery moves with road for realistic speed sensation</p>
+      <p><strong>Depth Effect</strong>: Mountains in background, buildings mid-ground, trees foreground</p>
+      <p><strong>Variety</strong>: Random placement for natural look</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>🎨 Modern UI/UX</h3>
+      <p><strong>React 18</strong> - Modern component architecture</p>
+      <p><strong>Tailwind CSS</strong> - Responsive, utility-first styling</p>
+      <p><strong>Framer Motion</strong> - Smooth animations and transitions</p>
+      <p><strong>Lucide Icons</strong> - Beautiful, consistent iconography</p>
+      <p><strong>Mobile Responsive</strong> - Works on all devices</p>
+    </div>
+
+    <hr>
+
+    <h2>Technology Stack</h2>
+
+    <div class="tech-stack">
+      <h3>Technologies Used</h3>
+      <ul>
+        <li><strong>Frontend:</strong> React 18 + Vite + Tailwind CSS</li>
+        <li><strong>Blockchain:</strong> GenLayer Studionet</li>
+        <li><strong>Real-time:</strong> Socket.IO WebSocket</li>
+        <li><strong>Game Engine:</strong> HTML5 Canvas + JavaScript</li>
+        <li><strong>Build Tool:</strong> Vite (fast HMR)</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <h2>Game Controls</h2>
+
+    <h3>Keyboard Controls</h3>
+    <ul>
+      <li><strong>← → Arrow Keys</strong> - Move left/right between lanes</li>
+      <li><strong>A/D Keys</strong> - Alternative movement</li>
+      <li><strong>Space</strong> - Start game (when ready)</li>
+    </ul>
+
+    <h3>Game Mechanics</h3>
+    <ul>
+      <li><strong>Avoid enemy cars</strong> - Collision = game over</li>
+      <li><strong>Enemy variety</strong> - Enemy cars have random types and colors, different from player car</li>
+      <li><strong>Speed increase</strong> - Gets faster as score increases</li>
+      <li><strong>Engine sound</strong> - Dynamic engine sound changes with speed</li>
+      <li><strong>Collision sound</strong> - Impact sound when crashing</li>
+      <li><strong>Restart</strong> - Click "Main Lagi" to instantly restart after game over</li>
+    </ul>
+
+    <hr>
+
+    <h2>Blockchain Integration</h2>
+
+    <p>The game integrates with GenLayer blockchain for score tracking and multiplayer sessions. Smart contracts store player scores and game sessions on-chain, ensuring transparency and immutability.</p>
+
+    <p><strong>Contract Name:</strong> RoadSurvivalGame</p>
+    <p><strong>Network:</strong> GenLayer Studionet</p>
+    <p><strong>Storage:</strong> String-based key-value pairs for sessions and scores</p>
+
+    <hr>
+
+    <h2>GenLayer-Specific Features</h2>
+
+    <p>This project demonstrates full integration with GenLayer's unique capabilities:</p>
+
+    <div class="feature-box">
+      <h3>🧠 LLM Integration</h3>
+      <p><strong>AI-Generated Car Descriptions</strong>: Use GenLayer's LLM to create unique, dynamic car descriptions</p>
+      <p><strong>AI Game Commentary</strong>: Auto-generate exciting commentary for game events</p>
+      <p><strong>Dynamic Content</strong>: All descriptions and commentary are generated in real-time by the LLM</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>🌐 Web Fetching</h3>
+      <p><strong>Real-Time Weather Data</strong>: Fetch live weather conditions from external APIs</p>
+      <p><strong>Car Statistics</strong>: Pull real car data from Wikipedia</p>
+      <p><strong>Dynamic Game Mechanics</strong>: Weather affects game difficulty (rain = slippery roads, etc.)</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>⚖️ Equivalence Principle</h3>
+      <p><strong>Deterministic Difficulty Calculation</strong>: Mathematical operations that produce consistent results across different LLMs</p>
+      <p><strong>Score Fairness Validation</strong>: Ensures scores are within reasonable bounds using deterministic rules</p>
+      <p><strong>Game Recommendations</strong>: Provides consistent recommendations using structured logic</p>
+    </div>
+
+    <hr>
+
+    <h2>Mobile Support</h2>
+
+    <p>The game features responsive design that works on all devices:</p>
+    <ul>
+      <li><strong>Desktop:</strong> Full 12-column grid layout</li>
+      <li><strong>Tablet:</strong> 8-column grid with adjusted spacing</li>
+      <li><strong>Mobile:</strong> Single column, touch-friendly controls</li>
+    </ul>
+
+    <hr>
+
+    <div style="text-align: center;">
+      <a href="https://road-survival.web.id/" class="play-button" target="_blank">🎮 Play Road Survival</a>
+    </div>
+
+    <hr>
+
+    <div class="github-note">
+      <h3>📚 Source Code</h3>
+      <p>Want to see the full project? Check out the complete source code on GitHub:</p>
+      <p style="margin-top: 12px;">
+        <a href="https://github.com/dhozil/road-survival" target="_blank">https://github.com/dhozil/road-survival</a>
+      </p>
+    </div>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>Built by <strong>dhozil</strong> for the gaming and blockchain community 🚀</em>
+    </p>
+  </article>
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Builder Projects - DhoziL Validator</title>
+  <link rel="icon" href="dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+
+  .projects-container {
+    animation: fadeIn 0.6s ease 0.2s backwards;
+  }
+
+  .project-card {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 36px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(88, 166, 255, 0.2);
+  }
+
+  .project-card .thumbnail {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .project-card h3 {
+    color: #58a6ff;
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .project-card .date {
+    color: #8b949e;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .project-card .description {
+    color: #c9d1d9;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+
+  .project-card .links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .project-card .links a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: rgba(88, 166, 255, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .project-card .links a:hover {
+    background: rgba(88, 166, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .project-card .links a.primary {
+    background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%);
+    color: #ffffff;
+  }
+
+  .project-card .links a.primary:hover {
+    background: linear-gradient(135deg, #2ea043 0%, #238636 100%);
+  }
+
+  .project-card .tags {
+    margin-top: 16px;
+  }
+
+  .project-card .tags span {
+    display: inline-block;
+    background: #21262d;
+    color: #8b949e;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .project-card {
+      padding: 24px;
+    }
+
+    .project-card h3 {
+      font-size: 1.25rem;
+    }
+
+    .project-card .links {
+      flex-direction: column;
+    }
+
+    .project-card .links a {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Blockchain Builder & Developer</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="builder-projects.html" class="active">Builder Projects</a>
+    <a href="blog.html">Blog</a>
+  </nav>
+
+  <div class="projects-container">
+    <h2 style="color: #e6edf3; margin-bottom: 32px; font-size: 2rem;">Builder Projects</h2>
+    <p style="color: #8b949e; margin-bottom: 40px; font-size: 1.1rem;">
+      Projects built by dhozil
+    </p>
+
+    <div class="project-card">
+      <img src="assets/Crypto-News-Hub.png" alt="Crypto News Hub" class="thumbnail" onerror="this.style.display='none'">
+      <h3>Crypto News Hub - AI-Powered Crypto News Platform</h3>
+      <div class="date">Hackathon Project</div>
+      <div class="description">
+        AI-powered crypto news platform with community governance and on-chain rewards. Automatically fetches and curates crypto news using AI, allows community members to submit and vote on content, and rewards quality contributions with on-chain tokens using GenLayer Intelligent Contracts.
+      </div>
+      <div class="links">
+        <a href="https://crypto-newshub.vercel.app/" target="_blank" class="primary">🌐 Visit Site</a>
+        <a href="projects/crypto-news-hub.html">Read More →</a>
+      </div>
+      <div class="tags">
+        <span>AI</span>
+        <span>GenLayer</span>
+        <span>News</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="assets/Road-Survival.png" alt="Road Survival" class="thumbnail" onerror="this.style.display='none'">
+      <h3>Road Survival - Multiplayer Racing Game</h3>
+      <div class="date">Released April 14, 2026</div>
+      <div class="description">
+        Advanced multiplayer racing game built with React and integrated with GenLayer blockchain. Features real-time multiplayer racing, 9 unique car types, sound effects, realistic environment, and GenLayer AI capabilities for car descriptions and game commentary.
+      </div>
+      <div class="links">
+        <a href="https://road-survival.web.id/" target="_blank" class="primary">🎮 Play Now</a>
+        <a href="projects/road-survival-racing-game.html">Read More →</a>
+      </div>
+      <div class="tags">
+        <span>React</span>
+        <span>Game</span>
+        <span>GenLayer</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="assets/DeepChain-Fishing.png" alt="DeepChain Fishing" class="thumbnail" onerror="this.style.display='none'">
+      <h3>DeepChain Fishing — Fully On-Chain Game on GenLayer</h3>
+      <div class="date">Released April 13, 2026</div>
+      <div class="description">
+        A fully on-chain fishing game built on GenLayer Intelligent Contracts. Every action from casting your line to upgrading gear is executed and stored directly on the blockchain. Features player identity, shop & equipment, rich fish system with rarity tiers, real-time weather integration, AI story generation, and global leaderboard.
+      </div>
+      <div class="links">
+        <a href="https://deepchain-fishing.web.id/" target="_blank" class="primary">🎣 Play Now</a>
+        <a href="projects/deepchain-fishing.html">Read More →</a>
+      </div>
+      <div class="tags">
+        <span>GenLayer</span>
+        <span>Game</span>
+        <span>Intelligent Contracts</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

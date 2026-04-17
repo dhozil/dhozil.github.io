@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DhoziL Validator</title>
+  <link rel="icon" href="dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.6;
+  }
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px rgba(0, 240, 255, 0.4),
+    0 0 40px rgba(0, 240, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.header img:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow:
+    0 0 30px rgba(0, 240, 255, 0.6),
+    0 0 60px rgba(0, 240, 255, 0.4);
+}
+    
+.header-text h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-text p {
+  margin: 8px 0 0 0;
+  color: #8b949e;
+  font-size: 1rem;
+}
+
+.nav {
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #30363d;
+  animation: fadeIn 0.6s ease 0.1s backwards;
+}
+
+.nav a {
+  color: #58a6ff;
+  text-decoration: none;
+  margin-right: 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.nav a:hover {
+  background: rgba(88, 166, 255, 0.1);
+  text-decoration: none;
+}
+
+.nav a.active {
+  background: rgba(88, 166, 255, 0.15);
+  color: #00f0ff;
+}
+    
+  h2 {
+    margin-top: 48px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e6edf3;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+  }
+
+ .projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  animation: fadeIn 0.6s ease 0.3s backwards;
+}
+
+  .project {
+  background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+  padding: 32px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid #30363d;
+  position: relative;
+  overflow: hidden;
+}
+
+.project::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+  .project:hover {
+  transform: translateY(-8px);
+  border-color: #58a6ff;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(88, 166, 255, 0.1);
+}
+
+.project:hover::before {
+  opacity: 1;
+}
+    
+  .project img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+  }
+
+  .project h3 {
+    color: #58a6ff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .project p {
+    color: #c9d1d9;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .project a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .project a:hover {
+    color: #00f0ff;
+    gap: 8px;
+  }
+
+ .contact {
+    margin-top: 64px;
+    padding: 40px;
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.4s backwards;
+  }
+
+  .contact h2 {
+    margin-top: 0;
+    animation: none;
+  }
+
+  .contact p {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 12px 24px;
+    background: rgba(88, 166, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .contact a:hover {
+    background: rgba(88, 166, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .contact-item:hover {
+    background: linear-gradient(145deg, #1c2128 0%, #21262d 100%);
+    border-color: #58a6ff;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(88, 166, 255, 0.2);
+  }
+
+  .contact-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(88, 166, 255, 0.1);
+    border-radius: 10px;
+  }
+
+  .contact-info {
+    flex: 1;
+  }
+
+  .contact-label {
+    color: #8b949e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .contact-value {
+    color: #e6edf3;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .projects-container {
+      grid-template-columns: 1fr;
+    }
+
+    .project {
+      padding: 24px;
+    }
+
+    .project h3 {
+      font-size: 1.25rem;
+    }
+
+    .contact {
+      padding: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="header">
+  <img src="assets/logo.png" alt="Validator Logo">
+
+  <div class="header-text">
+    <h1>dhozil</h1>
+    <p>Blockchain Validator &  Node operator with hands-on experience running validator and full nodes
+in multiple blockchain testnets, focusing on stability and performance</p>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="index.html" class="active">Home</a>
+  <a href="builder-projects.html">Builder Projects</a>
+  <a href="blog.html">Blog</a>
+</nav>
+
+  <h2>Experience</h2>
+<ul>
+ <h2>Projects</h2>
+
+<div class="projects-container">
+
+  <div class="project">
+    <img src="assets/initia.png" alt="Initia logo">
+    <h3>Initia</h3>
+    <p>
+      Participated as a validator in the Initia testnet,
+      operating validator infrastructure and monitoring performance.
+    </p>
+    <p>
+      <a href="https://initia.xyz" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/initia" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.gg/initia" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://x.com/cobersky/status/1804033513966178547?s=20" target="_blank" rel="noopener noreferrer">Proof</a>
+    </p>
+  </div>
+
+  <div class="project">
+    <img src="assets/dymension.png" alt="Dymension logo">
+    <h3>Dymension</h3>
+    <p>
+      Node operator for Dymension testnet,
+      running Rollapp Program - Fullnode and supporting network testing.
+    </p>
+    <p>
+      <a href="https://dymension.xyz" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/dymension" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.gg/dymension" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://x.com/cobersky/status/1704071667767759225?s=20" target="_blank" rel="noopener noreferrer">Proof</a>
+    </p>
+  </div>
+
+<div class="project">
+    <img src="assets/story.png" alt="story logo">
+    <h3>Story Protocol</h3>
+    <p>
+      Validator testnet for Story Protocol,
+      running validator testnet odyssey and aenid for Story protocol.
+    </p>
+    <p>
+      <a href="https://www.story.foundation/" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/StoryProtocol" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.gg/storyprotocol" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://x.com/cobersky/status/1856922264333422861?s=20" target="_blank" rel="noopener noreferrer">Proof Odyssey</a>
+      <a href="https://aeneid.staking.story.foundation/validators/0xdedd0312c083180ecd9251339ff2fe48fe5a1ce8" target="_blank" rel="noopener noreferrer">Proof Aenid</a>
+    </p>
+  </div>
+
+   <div class="project">
+    <img src="assets/sei.png" alt="sei logo">
+    <h3>Sei Network</h3>
+    <p>
+      Validator testnet program on Sei Network, there are several tasks for Validators and each task has points, starting from creating Validators, CLI transaction tasks, Relayers between Networks, etc.
+    </p>
+    <p>
+      <a href="www.sei.io/" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/SeiNetwork" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.com/invite/sei" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://github.com/dhozil/dhozil.github.io/blob/main/assets/sei%20validator%20proof%20dhozil.png" target="_blank" rel="noopener noreferrer">Proof</a>
+    </p>
+  </div>
+  
+ <div class="project">
+    <img src="assets/0g.png" alt="0g logo">
+    <h3>0G Labs</h3>
+    <p>
+      Validator testnet 0G Labs.
+    </p>
+    <p>
+      <a href="https://0g.ai/" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/0G_labs" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.com/invite/0glabs" target="_blank" rel="noopener noreferrer">Discord</a>
+    </p>
+  </div>
+
+   <div class="project">
+    <img src="assets/dill.png" alt="dill logo">
+    <h3>Dill Network</h3>
+    <p>
+      Running Full Validator node in the Dill Network for testing network performance.
+    </p>
+    <p>
+      <a href="https://0g.ai/" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/dill_xyz_" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.gg/CrQyHCtvKK" target="_blank" rel="noopener noreferrer">Discord</a>
+      <a href="https://alps.dill.xyz/validators?pubkey=85fe2437c3ee4d454cf579df495756a57019a05d7c5ca4ab286bdb7b4f7be10bb8f205e9484a4902f114ac8b364c64bf" target="_blank" rel="noopener noreferrer">Proof</a>
+    </p>
+  </div>
+
+   <div class="project">
+    <img src="assets/avail.png" alt="avail logo">
+    <h3>Avail</h3>
+    <p>
+     Participated Fullnode program that creates Rollups on avail and madara networks
+    </p>
+    <p>
+      <a href="https://availproject.org/" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://x.com/AvailProject" target="_blank" rel="noopener noreferrer">X</a>
+      <a href="https://discord.com/invite/AvailProject" target="_blank" rel="noopener noreferrer">Discord</a>
+    </p>
+  </div>
+</div>
+
+
+<section class="projects">
+  <h2>Contact</h2>
+  <div class="contact-grid">
+    <a href="mailto:dhozilveracyn@gmail.com" class="contact-item">
+      <div class="contact-icon">📧</div>
+      <div class="contact-info">
+        <div class="contact-label">Email</div>
+        <div class="contact-value">dhozilveracyn@gmail.com</div>
+      </div>
+    </a>
+    <a href="https://t.me/dhozil" target="_blank" rel="noopener noreferrer" class="contact-item">
+      <div class="contact-icon">✈️</div>
+      <div class="contact-info">
+        <div class="contact-label">Telegram</div>
+        <div class="contact-value">@dhozil</div>
+      </div>
+    </a>
+    <a href="https://x.com/cobersky" target="_blank" rel="noopener noreferrer" class="contact-item">
+      <div class="contact-icon">𝕏</div>
+      <div class="contact-info">
+        <div class="contact-label">X (Twitter)</div>
+        <div class="contact-value">@cobersky</div>
+      </div>
+    </a>
+    <a href="https://github.com/dhozil" target="_blank" rel="noopener noreferrer" class="contact-item">
+      <div class="contact-icon">💻</div>
+      <div class="contact-info">
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">@dhozil</div>
+      </div>
+    </a>
+  </div>
+</section>
+  
+</body>
+</html>

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How GenLayer Reaches Consensus Without Trusting Anyone - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .featured-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post .subtitle {
+    font-size: 1.25rem;
+    color: #8b949e;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .note {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #6366f1;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .diagram-container {
+    width: 100%;
+    max-width: 680px;
+    margin: 32px auto;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    overflow: hidden;
+    background: #161b22;
+  }
+
+  .diagram-container svg {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Interactive flow styles */
+  .od-wrap {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 1.5rem 0;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .od-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8b949e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .step-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48px;
+    flex-shrink: 0;
+  }
+
+  .step-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    cursor: pointer;
+    border: 2px solid;
+  }
+
+  .step-dot:hover { transform: scale(1.1); }
+
+  .step-line {
+    width: 2px;
+    flex: 1;
+    min-height: 16px;
+  }
+
+  .step-card {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 0 0 12px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid;
+    position: relative;
+  }
+
+  .step-card:hover { transform: translateX(4px); }
+
+  .step-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .step-card-desc {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .step-card-detail {
+    font-size: 11px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid;
+    line-height: 1.6;
+    display: none;
+  }
+
+  .step-card.open .step-card-detail { display: block; }
+
+  /* Colors per step - dark theme */
+  .s1 .step-dot { background: #21262d; border-color: #58a6ff; color: #58a6ff; }
+  .s1 .step-line { background: #30363d; }
+  .s1 .step-card { background: #21262d; border-color: #30363d; }
+  .s1 .step-card-title { color: #58a6ff; }
+  .s1 .step-card-desc { color: #8b949e; }
+  .s1 .step-card-detail { color: #c9d1d9; border-color: #30363d; }
+
+  .s2 .step-dot { background: #21262d; border-color: #3fb950; color: #3fb950; }
+  .s2 .step-line { background: #30363d; }
+  .s2 .step-card { background: #21262d; border-color: #30363d; }
+  .s2 .step-card-title { color: #3fb950; }
+  .s2 .step-card-desc { color: #8b949e; }
+  .s2 .step-card-detail { color: #c9d1d9; border-color: #30363d; }
+
+  .s3 .step-dot { background: #21262d; border-color: #d29922; color: #d29922; }
+  .s3 .step-line { background: #30363d; }
+  .s3 .step-card { background: #21262d; border-color: #30363d; }
+  .s3 .step-card-title { color: #d29922; }
+  .s3 .step-card-desc { color: #8b949e; }
+  .s3 .step-card-detail { color: #c9d1d9; border-color: #30363d; }
+
+  .s4 .step-dot { background: #21262d; border-color: #a371f7; color: #a371f7; }
+  .s4 .step-line { background: #30363d; }
+  .s4 .step-card { background: #21262d; border-color: #30363d; }
+  .s4 .step-card-title { color: #a371f7; }
+  .s4 .step-card-desc { color: #8b949e; }
+  .s4 .step-card-detail { color: #c9d1d9; border-color: #30363d; }
+
+  .s5 .step-dot { background: #21262d; border-color: #f85149; color: #f85149; }
+  .s5 .step-line { background: #30363d; }
+  .s5 .step-card { background: #21262d; border-color: #30363d; }
+  .s5 .step-card-title { color: #f85149; }
+  .s5 .step-card-desc { color: #8b949e; }
+  .s5 .step-card-detail { color: #c9d1d9; border-color: #30363d; }
+
+  .s6 .step-dot { background: #21262d; border-color: #2ea043; color: #2ea043; }
+  .s6 .step-card { background: #21262d; border-color: #30363d; }
+  .s6 .step-card-title { color: #2ea043; }
+  .s6 .step-card-desc { color: #8b949e; }
+  .s6 .step-card-detail { color: #c9d1d9; border-color: #30363d; }
+
+  .validator-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .validator-chip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .v-leader { background: #21262d; border-color: #d29922; color: #d29922; }
+  .v-agree { background: #21262d; border-color: #3fb950; color: #3fb950; }
+  .v-vote { background: #21262d; border-color: #58a6ff; color: #58a6ff; }
+
+  .appeal-tree {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .appeal-round {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .appeal-label {
+    font-weight: 600;
+    color: #f85149;
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  .appeal-validators {
+    display: flex;
+    gap: 3px;
+  }
+
+  .av {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 600;
+  }
+
+  .av-orig { background: #21262d; border-color: #58a6ff; color: #58a6ff; }
+  .av-new { background: #21262d; border-color: #a371f7; color: #a371f7; }
+
+  .hint {
+    text-align: center;
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  .outcomes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .outcome-box {
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    border: 1px solid;
+  }
+
+  .outcome-accept { background: #21262d; border-color: #30363d; color: #3fb950; }
+  .outcome-reject { background: #21262d; border-color: #30363d; color: #f85149; }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <article class="blog-post">
+    <h1>How GenLayer Reaches Consensus Without Trusting Anyone</h1>
+    <div class="meta">Posted on April 7, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Consensus</span> <span style="color: #8b949e;">Optimistic Democracy</span></div>
+    <p class="subtitle">A visual guide to Optimistic Democracy — GenLayer's mechanism for making AI-powered smart contracts work in a decentralized network.</p>
+
+    <hr>
+
+    <h2>The problem with AI on the blockchain</h2>
+
+    <p>
+      Most blockchains are deterministic by design. Run the same code with the same input on a thousand nodes, you get a thousand identical outputs. That's how you get consensus — everyone agrees because there's literally nothing to disagree about.
+    </p>
+
+    <p>
+      Now introduce an LLM. Ask it "is this news article accurate?" and you might get slightly different answers depending on which model is running, what temperature it's set to, or even just the time of day. Two validators running the same contract could produce outputs that are word-for-word different but mean exactly the same thing.
+    </p>
+
+    <p>
+      Traditional blockchain consensus breaks here. You can't just hash the outputs and compare — they'll never match.
+    </p>
+
+    <p>
+      This is the problem GenLayer's Optimistic Democracy solves.
+    </p>
+
+    <hr>
+
+    <h2>What is Optimistic Democracy?</h2>
+
+    <p>
+      Optimistic Democracy is GenLayer's consensus mechanism for Intelligent Contracts — contracts that can call LLMs, fetch live web data, and make subjective decisions on-chain.
+    </p>
+
+    <p>
+      The "optimistic" part means the network assumes transactions are valid unless someone proves otherwise. The "democracy" part means a group of validators votes on whether the proposed output is acceptable.
+    </p>
+
+    <p>
+      It's designed around a simple insight: you don't need everyone to produce identical results. You need enough independent validators to agree that a result is <em>good enough</em>.
+    </p>
+
+    <hr>
+
+    <h2>How it works — the full flow</h2>
+
+    <div class="od-wrap">
+      <div class="od-title">How Optimistic Democracy Works — GenLayer Consensus Flow</div>
+
+      <div class="flow" id="flowContainer"></div>
+
+      <div class="hint">Click each step to expand details</div>
+    </div>
+
+    <h2>How it works, step by step</h2>
+
+    <h3>Step 1 — Transaction submitted</h3>
+    <p>
+      A user submits a transaction to an Intelligent Contract. The network queues it and randomly selects a small group of validators to process it. One of them is designated as the <strong>Leader</strong>.
+    </p>
+    <p>
+      The random selection is important — it prevents any single validator from consistently controlling outcomes.
+    </p>
+
+    <h3>Step 2 — Leader executes the contract</h3>
+    <p>
+      The Leader is the only one who actually runs the contract end-to-end. This includes any LLM calls, web fetches, or complex computations. The result becomes the <strong>proposed output</strong> for this transaction.
+    </p>
+
+    <h3>Step 3 — Other validators evaluate the proposal</h3>
+    <p>
+      Here's where it gets interesting. The other validators don't just re-run the contract and compare outputs byte-for-byte. Instead, they apply the <strong>Equivalence Principle</strong> — a developer-defined rule for what counts as an acceptable result.
+    </p>
+    <p>
+      Depending on how the contract is written, this could mean checking outputs byte-for-byte, running their own LLM to judge semantic equivalence, or evaluating against predefined criteria.
+    </p>
+
+    <h3>Step 4 — Majority consensus</h3>
+    <p>
+      If most validators accept the Leader's proposal, the transaction status moves to <strong>ACCEPTED</strong>. But this isn't final yet.
+    </p>
+
+    <h3>Step 5 — The finality window</h3>
+    <p>
+      There's a time window after acceptance during which anyone can <strong>appeal</strong> the result by posting a bond. If no appeal is filed, the transaction becomes <strong>FINALIZED</strong>.
+    </p>
+
+    <h3>Step 6 — Appeals</h3>
+    <p>
+      If someone appeals, the validator set doubles. Each subsequent appeal doubles the validators again. The financial incentive keeps this honest: if you appeal and you're wrong, you lose your bond. Validators who voted incorrectly get slashed — they lose part of their staked tokens.
+    </p>
+
+    <hr>
+
+    <h2>Why this matters for developers</h2>
+
+    <div class="note">
+      <strong>You don't control which validator runs your contract.</strong> The Leader is selected randomly. Your contract needs to work correctly regardless of which LLM is acting as Leader.
+    </div>
+
+    <div class="note">
+      <strong>Consensus latency is real.</strong> From benchmarks, even a simple pure-Python contract with no LLM calls takes around 38 seconds to finalize on Studio testnet. That's the consensus process, not your code. Design your UX accordingly.
+    </div>
+
+    <div class="note">
+      <strong>The appeal mechanism is your safety net.</strong> If a bad actor validator tries to push a fraudulent result, any participant can challenge it. The economic incentives make attacks expensive and unprofitable.
+    </div>
+
+    <div class="note">
+      <strong>The finality window is a feature, not a bug.</strong> The window before finalization gives the community time to catch and correct errors. For high-stakes contracts, this is a meaningful security guarantee.
+    </div>
+
+    <hr>
+
+    <h2>The bigger picture</h2>
+
+    <p>
+      Optimistic Democracy is what makes GenLayer's "trustless AI" claim meaningful. It's not just running AI on a blockchain — it's a structured mechanism for multiple independent AI-powered validators to reach agreement on subjective, non-deterministic outputs without any single point of trust.
+    </p>
+
+    <p>
+      Bitcoin solved trustless money. Ethereum solved trustless computation. Optimistic Democracy is GenLayer's attempt at trustless <em>judgment</em>.
+    </p>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>This is part of a series of visual guides to GenLayer's core concepts. Next up: the Equivalence Principle — how validators actually decide if two different outputs mean the same thing.</em>
+    </p>
+  </article>
+
+<script>
+const steps = [
+  {
+    cls: 's1',
+    icon: '📤',
+    title: 'Transaction submitted',
+    desc: 'A user submits a transaction to an Intelligent Contract on the GenLayer network.',
+    detail: `The transaction is queued in contract-specific order and marked as <strong>PENDING</strong>. GenLayer randomly selects a small group of validators from the active validator pool to process this transaction. One is designated as the <strong>Leader</strong>.`,
+    extra: () => `
+      <div class="validator-row">
+        <div class="validator-chip v-leader">👑 Leader (randomly selected)</div>
+        <div class="validator-chip v-vote">🔵 Validator 2</div>
+        <div class="validator-chip v-vote">🔵 Validator 3</div>
+        <div class="validator-chip v-vote">🔵 Validator 4</div>
+        <div class="validator-chip v-vote">🔵 Validator 5</div>
+      </div>`
+  },
+  {
+    cls: 's2',
+    icon: '⚙️',
+    title: 'Leader executes the contract',
+    desc: 'The Leader validator runs the Intelligent Contract — including any LLM calls or web fetches — and proposes an output.',
+    detail: `The Leader is the only one who actually <em>executes</em> the contract in full at this stage. This output becomes the proposed result for the transaction. Other validators will not re-execute — they will evaluate the Leader's proposal instead.`,
+    extra: null
+  },
+  {
+    cls: 's3',
+    icon: '⚖️',
+    title: 'Validators apply the equivalence principle',
+    desc: 'Other validators independently check whether the Leader\'s output is acceptable using the Equivalence Principle defined in the contract.',
+    detail: `Depending on the contract's design, validators either:<br>
+    <strong>• strict_eq</strong> — compare byte-for-byte<br>
+    <strong>• prompt_comparative</strong> — run their own LLM call to judge semantic similarity<br>
+    <strong>• prompt_non_comparative</strong> — evaluate the Leader's output against predefined criteria without re-running`,
+    extra: null
+  },
+  {
+    cls: 's2',
+    icon: '✅',
+    title: 'Majority consensus reached',
+    desc: 'If most validators accept the Leader\'s output, the transaction is provisionally accepted and enters the Finality Window.',
+    detail: `The transaction status moves to <strong>ACCEPTED</strong>. This is not final yet — there is a time window during which any participant can challenge the result by initiating an appeal.`,
+    extra: () => `
+      <div class="outcomes">
+        <div class="outcome-box outcome-accept">✓ Majority agrees → ACCEPTED (provisional)</div>
+        <div class="outcome-box outcome-reject">✗ No majority → transaction fails or retried</div>
+      </div>`
+  },
+  {
+    cls: 's5',
+    icon: '⚠️',
+    title: 'Appeal window (optional)',
+    desc: 'If anyone disagrees with the result, they can appeal during the Finality Window by posting a bond.',
+    detail: `The appeal round doubles the number of validators. A new group joins the originals. They first vote on whether to re-evaluate. If yes, a new Leader is chosen. Each escalation doubles validators again — this continues until consensus or all validators have participated.`,
+    extra: () => `
+      <div class="appeal-tree">
+        <div class="appeal-round">
+          <span class="appeal-label">Round 1</span>
+          <div class="appeal-validators">
+            ${[...Array(5)].map(() => '<div class="av av-orig">V</div>').join('')}
+          </div>
+          <span style="font-size:10px;color:#6B7280">5 validators</span>
+        </div>
+        <div class="appeal-round">
+          <span class="appeal-label">Appeal 1</span>
+          <div class="appeal-validators">
+            ${[...Array(5)].map(() => '<div class="av av-orig">V</div>').join('')}
+            ${[...Array(5)].map(() => '<div class="av av-new">N</div>').join('')}
+          </div>
+          <span style="font-size:10px;color:#6B7280">10 validators (doubled)</span>
+        </div>
+        <div class="appeal-round">
+          <span class="appeal-label">Appeal 2</span>
+          <div class="appeal-validators">
+            ${[...Array(10)].map(() => '<div class="av av-orig">V</div>').join('')}
+            ${[...Array(10)].map(() => '<div class="av av-new">N</div>').join('')}
+          </div>
+          <span style="font-size:10px;color:#6B7280">20 validators (doubled again)</span>
+        </div>
+      </div>
+      <div style="font-size:10px;color:#9A3412;margin-top:6px">🔑 Correct appellant → rewarded. Incorrect → loses bond (slashing).</div>`
+  },
+  {
+    cls: 's6',
+    icon: '🏁',
+    title: 'FINALIZED',
+    desc: 'After the Finality Window closes with no successful appeal, the transaction is permanently recorded on-chain.',
+    detail: `State is updated, the result is immutable. If an appeal was successful, the state reflects the corrected outcome. Validators who voted incorrectly are slashed (lose part of their stake).`,
+    extra: null
+  },
+];
+
+const container = document.getElementById('flowContainer');
+
+steps.forEach((s, i) => {
+  const isLast = i === steps.length - 1;
+  const row = document.createElement('div');
+  row.className = `step-row ${s.cls}`;
+  row.innerHTML = `
+    <div class="step-connector">
+      <div class="step-dot">${s.icon}</div>
+      ${!isLast ? '<div class="step-line"></div>' : ''}
+    </div>
+    <div class="step-card" id="card-${i}">
+      <div class="step-card-title">${s.title}</div>
+      <div class="step-card-desc">${s.desc}</div>
+      <div class="step-card-detail" id="detail-${i}">
+        ${s.detail}
+        ${s.extra ? s.extra() : ''}
+      </div>
+    </div>`;
+
+  container.appendChild(row);
+
+  document.getElementById(`card-${i}`).addEventListener('click', () => {
+    document.getElementById(`card-${i}`).classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>

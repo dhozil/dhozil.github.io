@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started with Crypto Validation - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .featured-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .featured-image {
+      height: 250px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <article class="blog-post">
+    <h1>Getting Started with Crypto Validation: My Journey</h1>
+    <div class="meta">Posted on March 20, 2026 • Tags: <span style="color: #8b949e;">Crypto</span> <span style="color: #8b949e;">Validation</span> <span style="color: #8b949e;">Blockchain</span></div>
+
+    <p>
+      Welcome to my first blog post! As a blockchain validator and node operator, I've had the opportunity to work with various crypto projects and testnets. In this post, I want to share my journey and experiences in the crypto validation space.
+    </p>
+
+    <h2>What is a Blockchain Validator?</h2>
+    <p>
+      A blockchain validator is a participant in a blockchain network responsible for verifying transactions and creating new blocks. Validators play a crucial role in maintaining the security and integrity of the blockchain. By running validator nodes, we help secure the network and earn rewards in return.
+    </p>
+
+    <h2>My Experience So Far</h2>
+    <p>
+      I've been actively participating in multiple blockchain testnets, focusing on stability and performance. Here are some of the projects I've worked with:
+    </p>
+
+    <ul>
+      <li><strong>Initia</strong> - Participated as a validator in the testnet, operating validator infrastructure</li>
+      <li><strong>Dymension</strong> - Node operator running Rollapp Program Fullnode</li>
+      <li><strong>Story Protocol</strong> - Validator testnet participant for odyssey and aenid</li>
+      <li><strong>Sei Network</strong> - Validator testnet program with various tasks</li>
+      <li><strong>0G Labs</strong> - Validator testnet participant</li>
+      <li><strong>Dill Network</strong> - Running Full Validator node for performance testing</li>
+      <li><strong>Avail</strong> - Fullnode program participant for Rollups creation</li>
+    </ul>
+
+    <h2>Why I Got Started</h2>
+    <p>
+      My journey into crypto validation started from a curiosity about blockchain technology and a desire to contribute to decentralized networks. Running nodes and validators has given me hands-on experience with different consensus mechanisms and blockchain architectures.
+    </p>
+
+    <h2>What's Next?</h2>
+    <p>
+      I plan to continue exploring new blockchain projects and sharing my experiences through this blog. Stay tuned for more posts about specific projects, technical guides, and insights from my validation journey.
+    </p>
+
+    <p>
+      If you're interested in learning more about crypto validation or want to collaborate, feel free to reach out to me on <a href="https://t.me/dhozil" target="_blank">Telegram</a> or <a href="https://x.com/cobersky" target="_blank">X</a>.
+    </p>
+  </article>
+
+</body>
+</html>

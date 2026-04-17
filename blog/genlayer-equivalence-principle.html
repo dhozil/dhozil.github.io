@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Equivalence Principle: How GenLayer Validators Agree on AI Outputs - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post .subtitle {
+    font-size: 1.25rem;
+    color: #8b949e;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .warn {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #d29922;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  /* Equivalence Principle Interactive Styles */
+  .ep-wrap {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 1.5rem 0;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .ep-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8b949e;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .mode-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+  }
+
+  .mode-tab {
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1.5px solid;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .mode-tab.active-strict {
+    background: #21262d;
+    border-color: #58a6ff;
+    color: #58a6ff;
+  }
+
+  .mode-tab.active-comparative {
+    background: #21262d;
+    border-color: #3fb950;
+    color: #3fb950;
+  }
+
+  .mode-tab.active-noncomp {
+    background: #21262d;
+    border-color: #d29922;
+    color: #d29922;
+  }
+
+  .mode-tab:not([class*="active"]) {
+    border-color: #30363d;
+    color: #8b949e;
+  }
+
+  .mode-tab:not([class*="active"]):hover {
+    border-color: #58a6ff;
+    color: #c9d1d9;
+  }
+
+  .ep-panel {
+    display: none;
+  }
+
+  .ep-panel.show {
+    display: block;
+  }
+
+  .comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+
+  .comp-col {
+    border-radius: 10px;
+    border: 1px solid;
+    overflow: hidden;
+  }
+
+  .comp-col-header {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .comp-col-body {
+    padding: 12px 14px;
+  }
+
+  .strict .comp-col-header {
+    background: #21262d;
+    color: #58a6ff;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .strict {
+    border-color: #30363d;
+  }
+
+  .comp-green .comp-col-header {
+    background: #21262d;
+    color: #3fb950;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .comp-green {
+    border-color: #30363d;
+  }
+
+  .noncomp-col .comp-col-header {
+    background: #21262d;
+    color: #d29922;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .noncomp-col {
+    border-color: #30363d;
+  }
+
+  .mini-step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .mini-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .mini-text {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8b949e;
+    padding-top: 2px;
+  }
+
+  .mini-text strong {
+    color: #c9d1d9;
+  }
+
+  .s-num {
+    background: #21262d;
+    color: #58a6ff;
+    border: 1px solid #30363d;
+  }
+
+  .c-num {
+    background: #21262d;
+    color: #3fb950;
+    border: 1px solid #30363d;
+  }
+
+  .n-num {
+    background: #21262d;
+    color: #d29922;
+    border: 1px solid #30363d;
+  }
+
+  .code-block {
+    background: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 11px;
+    margin: 10px 0;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+
+  .kw {
+    color: #ff7b72;
+    font-weight: 500;
+  }
+
+  .fn {
+    color: #d2a8ff;
+  }
+
+  .str {
+    color: #a5d6ff;
+  }
+
+  .cm {
+    color: #8b949e;
+  }
+
+  .verdict-demo {
+    margin: 10px 0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border: 1px solid;
+  }
+
+  .verdict-strict {
+    background: #21262d;
+    border-color: #30363d;
+  }
+
+  .verdict-comp {
+    background: #21262d;
+    border-color: #30363d;
+  }
+
+  .verdict-noncomp {
+    background: #21262d;
+    border-color: #30363d;
+  }
+
+  .verdict-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    font-size: 11px;
+  }
+
+  .verdict-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .v-check {
+    background: #21262d;
+    color: #3fb950;
+    border: 1px solid #30363d;
+  }
+
+  .v-cross {
+    background: #21262d;
+    color: #f85149;
+    border: 1px solid #30363d;
+  }
+
+  .verdict-label {
+    color: #8b949e;
+    flex: 1;
+  }
+
+  .verdict-result {
+    font-weight: 600;
+    font-size: 10px;
+  }
+
+  .vr-pass {
+    color: #3fb950;
+  }
+
+  .vr-fail {
+    color: #f85149;
+  }
+
+  .when-to-use {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .use-card {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid;
+    font-size: 11px;
+  }
+
+  .use-yes {
+    background: #21262d;
+    border-color: #30363d;
+    color: #3fb950;
+  }
+
+  .use-no {
+    background: #21262d;
+    border-color: #30363d;
+    color: #f85149;
+  }
+
+  .use-label {
+    font-weight: 600;
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+
+  .sum-card {
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .sum-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .sum-strict {
+    background: #21262d;
+    border-color: #30363d;
+  }
+
+  .sum-comp {
+    background: #21262d;
+    border-color: #30363d;
+  }
+
+  .sum-noncomp {
+    background: #21262d;
+    border-color: #30363d;
+  }
+
+  .sum-title {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+
+  .sum-strict .sum-title {
+    color: #58a6ff;
+  }
+
+  .sum-comp .sum-title {
+    color: #3fb950;
+  }
+
+  .sum-noncomp .sum-title {
+    color: #d29922;
+  }
+
+  .sum-sub {
+    font-size: 10px;
+    color: #8b949e;
+  }
+
+  .sum-badge {
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    margin-top: 4px;
+    display: inline-block;
+  }
+
+  .b-fast {
+    background: #21262d;
+    color: #3fb950;
+    border: 1px solid #30363d;
+  }
+
+  .b-medium {
+    background: #21262d;
+    color: #d29922;
+    border: 1px solid #30363d;
+  }
+
+  .b-slow {
+    background: #21262d;
+    color: #f85149;
+    border: 1px solid #30363d;
+  }
+
+  .hint {
+    text-align: center;
+    font-size: 11px;
+    color: #8b949e;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+
+    .comp-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .summary-bar {
+      grid-template-columns: 1fr;
+    }
+
+    .when-to-use {
+      grid-template-columns: 1fr;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <article class="blog-post">
+    <h1>The Equivalence Principle: How GenLayer Validators Agree on AI Outputs</h1>
+    <div class="meta">Posted on April 7, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Equivalence Principle</span> <span style="color: #8b949e;">Consensus</span></div>
+    <p class="subtitle">A visual breakdown of the three types of equivalence checks — and how to pick the right one for your contract.</p>
+
+    <hr>
+
+    <h2>The core challenge</h2>
+
+    <p>
+      Imagine two validators independently ask an LLM to classify a product review as positive or negative. One gets "POSITIVE". The other gets "This review expresses satisfaction." Both are correct answers to the same question — but they're completely different strings.
+    </p>
+
+    <p>
+      On a traditional blockchain, consensus requires identical outputs. These two results would never match, and the transaction would fail.
+    </p>
+
+    <p>
+      GenLayer's solution to this is the Equivalence Principle — a developer-defined rule that tells validators what "equivalent" means for a given contract.
+    </p>
+
+    <hr>
+
+    <h2>The three types at a glance</h2>
+
+    <div class="ep-wrap">
+      <div class="ep-title">Equivalence Principle — How Validators Agree on Non-Deterministic Outputs</div>
+
+      <div class="summary-bar">
+        <div class="sum-card sum-strict" onclick="showPanel('strict')">
+          <div class="sum-title">strict_eq</div>
+          <div class="sum-sub">Byte-identical results</div>
+          <span class="sum-badge b-fast">⚡ Fastest</span>
+        </div>
+        <div class="sum-card sum-comp" onclick="showPanel('comparative')">
+          <div class="sum-title">prompt_comparative</div>
+          <div class="sum-sub">Semantic similarity check</div>
+          <span class="sum-badge b-medium">⏱ Medium</span>
+        </div>
+        <div class="sum-card sum-noncomp" onclick="showPanel('noncomp')">
+          <div class="sum-title">prompt_non_comparative</div>
+          <div class="sum-sub">Criteria-based evaluation</div>
+          <span class="sum-badge b-slow">🔍 Flexible</span>
+        </div>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode-tab active-strict" id="tab-strict" onclick="showPanel('strict')">strict_eq</button>
+        <button class="mode-tab" id="tab-comparative" onclick="showPanel('comparative')">prompt_comparative</button>
+        <button class="mode-tab" id="tab-noncomp" onclick="showPanel('noncomp')">prompt_non_comparative</button>
+      </div>
+
+      <div class="ep-panel show" id="panel-strict">
+        <div class="comp-grid">
+          <div class="comp-col strict">
+            <div class="comp-col-header">👑 Leader validator</div>
+            <div class="comp-col-body">
+              <div class="mini-step">
+                <div class="mini-num s-num">1</div>
+                <div class="mini-text">Executes the contract fully — LLM call, web fetch, or computation</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num s-num">2</div>
+                <div class="mini-text">Returns a tightly-constrained output: <strong>{"sentiment":"POSITIVE"}</strong></div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num s-num">3</div>
+                <div class="mini-text">Always uses <strong>json.dumps(result, sort_keys=True)</strong> to ensure consistent key ordering</div>
+              </div>
+            </div>
+          </div>
+          <div class="comp-col strict">
+            <div class="comp-col-header">🔵 Other validators</div>
+            <div class="comp-col-body">
+              <div class="mini-step">
+                <div class="mini-num s-num">1</div>
+                <div class="mini-text">Re-execute the same contract independently</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num s-num">2</div>
+                <div class="mini-text">Compare their output with the Leader's <strong>byte-for-byte</strong></div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num s-num">3</div>
+                <div class="mini-text"><strong>Must match exactly</strong> — even one character difference = disagree</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block"><span class="kw">def</span> <span class="fn">run</span>():
+    result = gl.nondet.exec_prompt(
+        <span class="str">'Classify as POSITIVE, NEGATIVE, or NEUTRAL. '</span>
+        <span class="str">f'Text: "{text}". Respond ONLY with JSON: {{"sentiment": "..."}}'</span>,
+        response_format=<span class="str">"json"</span>
+    )
+    <span class="kw">return</span> json.dumps(result, sort_keys=<span class="kw">True</span>)  <span class="cm"># sort_keys critical!</span>
+
+raw = gl.eq_principle.<span class="fn">strict_eq</span>(run)</div>
+
+        <div class="verdict-demo verdict-strict">
+          <div style="font-size:11px;font-weight:600;color:#58a6ff;margin-bottom:6px">Consensus examples</div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-check">✓</div>
+            <div class="verdict-label">Leader: <code>{"sentiment":"POSITIVE"}</code> · Validator: <code>{"sentiment":"POSITIVE"}</code></div>
+            <div class="verdict-result vr-pass">AGREE</div>
+          </div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-cross">✗</div>
+            <div class="verdict-label">Leader: <code>{"sentiment":"POSITIVE"}</code> · Validator: <code>{"sentiment":"positive"}</code></div>
+            <div class="verdict-result vr-fail">DISAGREE</div>
+          </div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-cross">✗</div>
+            <div class="verdict-label">Leader: <code>{"sentiment":"POSITIVE"}</code> · Validator: <code>{"Sentiment":"POSITIVE"}</code></div>
+            <div class="verdict-result vr-fail">DISAGREE (key case)</div>
+          </div>
+        </div>
+
+        <div class="when-to-use">
+          <div class="use-card use-yes"><div class="use-label">✓ Use when</div>Output is constrained: yes/no, fixed enum, numeric value, sorted JSON</div>
+          <div class="use-card use-no"><div class="use-label">✗ Avoid when</div>Output is open-ended text, prices that drift, or creative content</div>
+        </div>
+      </div>
+
+      <div class="ep-panel" id="panel-comparative">
+        <div class="comp-grid">
+          <div class="comp-col comp-green">
+            <div class="comp-col-header">👑 Leader validator</div>
+            <div class="comp-col-body">
+              <div class="mini-step">
+                <div class="mini-num c-num">1</div>
+                <div class="mini-text">Generates an open-ended output: a summary, classification, or analysis</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num c-num">2</div>
+                <div class="mini-text">Output doesn't need to be constrained — natural language is fine</div>
+              </div>
+            </div>
+          </div>
+          <div class="comp-col comp-green">
+            <div class="comp-col-header">🔵 Other validators</div>
+            <div class="comp-col-body">
+              <div class="mini-step">
+                <div class="mini-num c-num">1</div>
+                <div class="mini-text">Run the <strong>same contract</strong> and get their own output</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num c-num">2</div>
+                <div class="mini-text">Run a <strong>second LLM call</strong> to compare their output vs Leader's output</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num c-num">3</div>
+                <div class="mini-text">LLM decides: are these <strong>semantically equivalent</strong> based on the principle?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block"><span class="kw">def</span> <span class="fn">run</span>():
+    <span class="kw">return</span> gl.nondet.exec_prompt(
+        <span class="str">'Summarize this in one sentence: '</span> + text
+    )
+
+result = gl.eq_principle.<span class="fn">prompt_comparative</span>(
+    run,
+    principle=<span class="str">"Summaries are equivalent if they convey the same main idea."</span>
+)</div>
+
+        <div class="verdict-demo verdict-comp">
+          <div style="font-size:11px;font-weight:600;color:#3fb950;margin-bottom:6px">Consensus examples</div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-check">✓</div>
+            <div class="verdict-label">Leader: "Bitcoin is a decentralized currency" · Validator: "BTC operates without a central bank"</div>
+            <div class="verdict-result vr-pass">AGREE (same idea)</div>
+          </div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-cross">✗</div>
+            <div class="verdict-label">Leader: "Bitcoin is rising" · Validator: "Bitcoin is falling rapidly"</div>
+            <div class="verdict-result vr-fail">DISAGREE</div>
+          </div>
+        </div>
+
+        <div style="background:#21262d;border:1px solid #30363d;border-radius:6px;padding:8px 12px;font-size:11px;color:#d29922;margin-top:8px">
+          ⏱ <strong>Note:</strong> Each validator makes 2 LLM calls (execute + compare), adding ~6s latency vs strict_eq.
+        </div>
+
+        <div class="when-to-use">
+          <div class="use-card use-yes"><div class="use-label">✓ Use when</div>Output is text that can vary in wording but should convey the same meaning</div>
+          <div class="use-card use-no"><div class="use-label">✗ Avoid when</div>Output can be constrained to fixed schema — use strict_eq instead (faster)</div>
+        </div>
+      </div>
+
+      <div class="ep-panel" id="panel-noncomp">
+        <div class="comp-grid">
+          <div class="comp-col noncomp-col">
+            <div class="comp-col-header">👑 Leader validator</div>
+            <div class="comp-col-body">
+              <div class="mini-step">
+                <div class="mini-num n-num">1</div>
+                <div class="mini-text">Generates output — could be a summary, analysis, creative content</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num n-num">2</div>
+                <div class="mini-text">Output is evaluated against <strong>predefined criteria</strong>, not compared to others</div>
+              </div>
+            </div>
+          </div>
+          <div class="comp-col noncomp-col">
+            <div class="comp-col-header">🔵 Other validators</div>
+            <div class="comp-col-body">
+              <div class="mini-step">
+                <div class="mini-num n-num">1</div>
+                <div class="mini-text"><strong>Do NOT re-execute</strong> the contract — no second LLM call needed</div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num n-num">2</div>
+                <div class="mini-text">Evaluate whether the Leader's output meets the <strong>criteria in the principle</strong></div>
+              </div>
+              <div class="mini-step">
+                <div class="mini-num n-num">3</div>
+                <div class="mini-text">Vote: does it satisfy accuracy, relevance, format requirements?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block"><span class="kw">def</span> <span class="fn">run</span>():
+    <span class="kw">return</span> gl.nondet.exec_prompt(
+        <span class="str">'Write a one-paragraph summary of this article: '</span> + article
+    )
+
+result = gl.eq_principle.<span class="fn">prompt_non_comparative</span>(
+    run,
+    principle=<span class="str">"A valid summary: (1) accurately reflects main points, "</span>
+              <span class="str">"(2) is under 100 words, (3) uses neutral tone."</span>
+)</div>
+
+        <div class="verdict-demo verdict-noncomp">
+          <div style="font-size:11px;font-weight:600;color:#d29922;margin-bottom:6px">Evaluation criteria check</div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-check">✓</div>
+            <div class="verdict-label">Accurately reflects main points of the article?</div>
+            <div class="verdict-result vr-pass">YES</div>
+          </div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-check">✓</div>
+            <div class="verdict-label">Under 100 words?</div>
+            <div class="verdict-result vr-pass">YES (87 words)</div>
+          </div>
+          <div class="verdict-row">
+            <div class="verdict-icon v-check">✓</div>
+            <div class="verdict-label">Uses neutral tone?</div>
+            <div class="verdict-result vr-pass">YES</div>
+          </div>
+          <div style="margin-top:6px;font-size:10px;font-weight:600;color:#d29922">→ Leader's output ACCEPTED</div>
+        </div>
+
+        <div class="when-to-use">
+          <div class="use-card use-yes"><div class="use-label">✓ Use when</div>Output is subjective/creative and validators should judge quality, not compare wording</div>
+          <div class="use-card use-no"><div class="use-label">✗ Avoid when</div>Criteria are vague — validators need clear, specific rules to evaluate against</div>
+        </div>
+      </div>
+
+      <div class="hint">Click the cards or tabs above to switch between equivalence types</div>
+    </div>
+
+    <hr>
+
+    <h2>What the Equivalence Principle actually is</h2>
+
+    <p>
+      It's not a fixed rule baked into the protocol. It's a mechanism that lets <em>you</em>, the developer, define the acceptance criteria for your contract's non-deterministic outputs.
+    </p>
+
+    <p>
+      Every time your contract calls <code>gl.nondet.exec_prompt()</code> or <code>gl.nondet.web.*</code>, the result goes through an equivalence check before validators can agree. You choose which type of check fits your use case.
+    </p>
+
+    <hr>
+
+    <h2>Option 1 — strict_eq</h2>
+
+    <p>
+      The strictest and fastest option. All validators must produce byte-identical results.
+    </p>
+
+    <pre>def run():
+    result = gl.nondet.exec_prompt(
+        f'Classify as POSITIVE, NEGATIVE, or NEUTRAL. '
+        f'Text: "{text}". '
+        f'Respond ONLY with JSON: {{"sentiment": "..."}}'
+        response_format="json"
+    )
+    return json.dumps(result, sort_keys=True)  # sort_keys is critical!
+
+raw = gl.eq_principle.strict_eq(run)</pre>
+
+    <p>
+      The <code>sort_keys=True</code> part is important — without it, different validators might serialize the same JSON object with keys in different orders, breaking consensus even when the content is identical.
+    </p>
+
+    <p>
+      <strong>When it works:</strong> The output space is small and well-defined. Sentiment classification with three possible values, yes/no decisions, numeric calculations, fixed-schema JSON responses.
+    </p>
+
+    <p>
+      <strong>When it breaks:</strong> Anything open-ended. Prices that fluctuate between the Leader's fetch and a validator's fetch. Summaries where two validators phrase things differently.
+    </p>
+
+    <p>
+      From benchmarks, <code>strict_eq</code> adds about 6 seconds of overhead over a pure-Python baseline. It's the most efficient option when applicable.
+    </p>
+
+    <hr>
+
+    <h2>Option 2 — prompt_comparative</h2>
+
+    <p>
+      A softer check. Each validator runs the contract independently, then uses a second LLM call to judge whether their output and the Leader's output are semantically equivalent.
+    </p>
+
+    <pre>def run():
+    return gl.nondet.exec_prompt(
+        'Summarize this in one sentence: ' + text
+    )
+
+result = gl.eq_principle.prompt_comparative(
+    run,
+    principle="The summaries are equivalent if they convey the same main idea."
+)</pre>
+
+    <p>
+      The <code>principle</code> parameter is your semantic equivalence rule — the LLM uses it to decide if the outputs are close enough.
+    </p>
+
+    <p>
+      <strong>When it works:</strong> Open-ended text where you expect variation in wording but consistency in meaning. Summaries, analyses, explanations.
+    </p>
+
+    <p>
+      <strong>A real-world gotcha:</strong> We tried using <code>strict_eq</code> for a price feed contract that fetched live crypto prices. It failed constantly — validators would get slightly different prices depending on when exactly they made the API call. The right approach for volatile data is <code>prompt_comparative</code> with a tolerance rule.
+    </p>
+
+    <div class="warn">
+      ⏱ Since validators each make two LLM calls (execute + compare), <code>prompt_comparative</code> adds about 12 seconds of overhead vs baseline — double the cost of <code>strict_eq</code>.
+    </div>
+
+    <hr>
+
+    <h2>Option 3 — prompt_non_comparative</h2>
+
+    <p>
+      The most flexible option. Validators don't re-run the contract at all — they evaluate whether the Leader's output meets a set of predefined criteria.
+    </p>
+
+    <pre>def run():
+    return gl.nondet.exec_prompt(
+        'Write a one-paragraph summary of this article: ' + article
+    )
+
+result = gl.eq_principle.prompt_non_comparative(
+    run,
+    principle="A valid summary: (1) accurately reflects main points, "
+              "(2) is under 100 words, (3) uses neutral tone."
+)</pre>
+
+    <p>
+      <strong>When it works:</strong> Subjective or creative output where validators judging quality makes more sense than validators replicating the work.
+    </p>
+
+    <p>
+      <strong>The tradeoff:</strong> Your criteria need to be specific enough that different validators applying them will consistently reach the same verdict. Vague criteria lead to inconsistent votes.
+    </p>
+
+    <hr>
+
+    <h2>Choosing the right one</h2>
+
+    <p>
+      <strong>Can your output be constrained to a fixed schema with a small set of possible values?</strong> Use <code>strict_eq</code>. It's the fastest and most predictable.
+    </p>
+
+    <p>
+      <strong>Is your output open-ended text where meaning matters more than exact wording?</strong> Use <code>prompt_comparative</code>. Write a clear, specific principle.
+    </p>
+
+    <p>
+      <strong>Is your output something where re-running doesn't make sense, and validators should just judge the Leader's result?</strong> Use <code>prompt_non_comparative</code>. Be very precise with your criteria.
+    </p>
+
+    <hr>
+
+    <h2>The developer responsibility</h2>
+
+    <p>
+      The Equivalence Principle is your responsibility to get right. The protocol gives you the tools, but the correctness of your consensus logic depends entirely on how well you define equivalence for your specific use case.
+    </p>
+
+    <p>
+      A poorly defined equivalence principle leads to two failure modes: too strict → validators disagree constantly, transactions keep failing. Too loose → validators accept outputs that are actually wrong.
+    </p>
+
+    <p>
+      The good news is that GenLayer Studio's validator logs make it reasonably easy to debug. When validators disagree, you can see exactly what each one produced and why the comparison failed.
+    </p>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>This is part of a series of visual guides to GenLayer's core concepts. Previous: How Optimistic Democracy Works. Next: GenLayer Architecture explained layer by layer.</em>
+    </p>
+  </article>
+
+<script>
+function showPanel(name) {
+  ['strict','comparative','noncomp'].forEach(n => {
+    document.getElementById('panel-' + n).classList.remove('show');
+    const tab = document.getElementById('tab-' + n);
+    tab.className = 'mode-tab';
+  });
+  document.getElementById('panel-' + name).classList.add('show');
+  const tab = document.getElementById('tab-' + name);
+  if (name === 'strict') tab.className = 'mode-tab active-strict';
+  else if (name === 'comparative') tab.className = 'mode-tab active-comparative';
+  else tab.className = 'mode-tab active-noncomp';
+}
+</script>
+
+</body>
+</html>

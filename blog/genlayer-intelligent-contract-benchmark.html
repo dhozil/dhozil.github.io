@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenLayer Intelligent Contract — Execution Performance Benchmark - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .featured-image {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .highlight {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    padding: 28px;
+    border-radius: 12px;
+    margin: 24px 0;
+    border-left: 4px solid #58a6ff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .highlight p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  th, td {
+    border: 1px solid #30363d;
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    color: #58a6ff;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  td {
+    background: rgba(33, 38, 45, 0.5);
+    font-size: 0.9rem;
+  }
+
+  tr:hover td {
+    background: rgba(33, 38, 45, 0.8);
+  }
+
+  blockquote {
+    border-left: 4px solid #58a6ff;
+    padding-left: 20px;
+    margin: 24px 0;
+    color: #8b949e;
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+
+    table {
+      font-size: 0.75rem;
+    }
+
+    th, td {
+      padding: 8px 4px;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <article class="blog-post">
+    <h1>GenLayer Intelligent Contract — Execution Performance Benchmark</h1>
+    <div class="meta">Posted on March April 4, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Benchmark</span> <span style="color: #8b949e;">Performance</span></div>
+
+    <img src="../assets/genlayer-benchmark.png" alt="GenLayer Benchmark" class="featured-image" onerror="this.style.display='none'">
+
+    <blockquote>
+      How long does it actually take for different types of Intelligent Contracts to finalize on GenLayer?
+    </blockquote>
+
+    <p>
+      This repo documents a performance benchmark measuring execution time across 5 contract categories on the GenLayer Studio testnet. All contracts, raw data, and methodology are included.
+    </p>
+
+    <hr style="border: 0; border-top: 1px solid #30363d; margin: 32px 0;">
+
+    <h2>Results Summary</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Contract Type</th>
+          <th>Run 1</th>
+          <th>Run 2</th>
+          <th>Run 3</th>
+          <th>Average</th>
+          <th>vs Baseline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pure Python (baseline)</td>
+          <td>30s</td>
+          <td>40s</td>
+          <td>45s</td>
+          <td><strong>~38s</strong></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Web only</td>
+          <td>45s</td>
+          <td>45s</td>
+          <td>40s</td>
+          <td><strong>~43s</strong></td>
+          <td>+5s</td>
+        </tr>
+        <tr>
+          <td>LLM strict_eq</td>
+          <td>40s</td>
+          <td>48s</td>
+          <td>45s</td>
+          <td><strong>~44s</strong></td>
+          <td>+6s</td>
+        </tr>
+        <tr>
+          <td>LLM prompt_comparative</td>
+          <td>45s</td>
+          <td>55s</td>
+          <td>49s</td>
+          <td><strong>~50s</strong></td>
+          <td>+12s</td>
+        </tr>
+        <tr>
+          <td>Web + LLM combined</td>
+          <td>60s</td>
+          <td>65s</td>
+          <td>60s</td>
+          <td><strong>~62s</strong></td>
+          <td>+24s</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Test Environment</h2>
+
+    <ul>
+      <li><strong>Network:</strong> GenLayer Studio hosted testnet (<code>studio.genlayer.com</code>)</li>
+      <li><strong>Chain ID:</strong> 61999</li>
+      <li><strong>Total validators:</strong> 115 active</li>
+      <li><strong>LLM models running simultaneously:</strong> 8 different models across 2 providers</li>
+    </ul>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Provider</th>
+          <th>Validators</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GPT-5.2</td>
+          <td>openrouter</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>GPT-5-mini</td>
+          <td>openrouter</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Claude Sonnet 4.5</td>
+          <td>openrouter</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>Gemini 3 Flash Preview</td>
+          <td>openrouter</td>
+          <td>15</td>
+        </tr>
+        <tr>
+          <td>Nvidia Llama 3.1 Nemotron Ultra 253B</td>
+          <td>openrouter</td>
+          <td>17</td>
+        </tr>
+        <tr>
+          <td>Qwen3 235B</td>
+          <td>openrouter</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>DeepSeek V3.2</td>
+          <td>openrouter + ionet</td>
+          <td>26</td>
+        </tr>
+        <tr>
+          <td>Llama 4 Maverick</td>
+          <td>openrouter + ionet</td>
+          <td>14</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Contracts Tested</h2>
+
+    <h3>1. Pure Python (baseline)</h3>
+    <p><strong>File:</strong> <code>contracts/01_pure_python.py</code></p>
+    <p>
+      Basic computation with no external calls — sorts a list and stores the result. Used to isolate the consensus overhead from any LLM or web latency.
+    </p>
+
+    <h3>2. LLM with strict_eq</h3>
+    <p><strong>File:</strong> <code>contracts/02_llm_strict_eq.py</code></p>
+    <p>
+      Single LLM call for sentiment classification. Uses <code>gl.eq_principle.strict_eq</code> — all validators must return byte-identical JSON. Prompt is tightly constrained to three possible values.
+    </p>
+
+    <h3>3. LLM with prompt_comparative</h3>
+    <p><strong>File:</strong> <code>contracts/03_llm_prompt_comparative.py</code></p>
+    <p>
+      Open-ended text summarization. Uses <code>gl.eq_principle.prompt_comparative</code> — validators agree if outputs are semantically equivalent. Requires an additional LLM call per validator to evaluate equivalence.
+    </p>
+
+    <h3>4. Web access only</h3>
+    <p><strong>File:</strong> <code>contracts/04_web_only.py</code></p>
+    <p>
+      HTTP fetch with no LLM. Fetches live data from Coinbase API and stores response body length. Uses <code>strict_eq</code> since the numeric result should be identical across validators if fetched close in time.
+    </p>
+
+    <h3>5. Web + LLM combined</h3>
+    <p><strong>File:</strong> <code>contracts/05_web_llm_combined.py</code></p>
+    <p>
+      Fetches live crypto price from Coinbase API, then passes it to an LLM for a HIGH/MEDIUM/LOW assessment. Chains two non-deterministic operations in a single transaction.
+    </p>
+
+    <h2>Key Findings</h2>
+
+    <h3>1. Consensus is the bottleneck, not computation</h3>
+    <p>
+      Even pure Python with trivial logic takes ~38 seconds. That's the consensus process — 115 validators independently executing and agreeing — not the code itself. Optimizing contract logic has minimal impact on user-perceived latency.
+    </p>
+
+    <h3>2. LLM calls add surprisingly little overhead</h3>
+    <p>
+      Adding a single LLM call with <code>strict_eq</code> only added ~6 seconds over baseline. LLM inference happens in parallel across validators and gets partially absorbed into the consensus window.
+    </p>
+
+    <h3>3. Web access and LLM strict_eq are roughly equivalent</h3>
+    <p>
+      Web-only (~43s) and LLM strict_eq (~44s) came in nearly identical. Both operations have similar latency profiles because the bottleneck is the same — waiting for all validators to complete independently.
+    </p>
+
+    <h3>4. prompt_comparative costs more than strict_eq</h3>
+    <p>
+      The ~6 second gap between <code>strict_eq</code> and <code>prompt_comparative</code> reflects the additional LLM call validators make to evaluate semantic equivalence. If your output can be constrained to a fixed schema, <code>strict_eq</code> is faster.
+    </p>
+
+    <h3>5. Chaining web + LLM compounds latency</h3>
+    <p>
+      Web + LLM combined (~62s) is more than the sum of web alone (+5s) and LLM alone (+6s) — suggesting compounding effects when two non-deterministic operations need to converge across 115 validators.
+    </p>
+
+    <h2>Deployed Contracts (Verifiable on Explorer)</h2>
+
+    <p>All contracts were deployed on GenLayer Studio testnet and can be verified on the explorer:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Contract Type</th>
+          <th>Address</th>
+          <th>Explorer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Pure Python (baseline)</td>
+          <td><code>0x3594C3e0Ff54C091351CaB39c74C1566aB3b64Fe</code></td>
+          <td><a href="https://explorer-studio.genlayer.com/address/0x3594C3e0Ff54C091351CaB39c74C1566aB3b64Fe" target="_blank" rel="noopener noreferrer">View ↗</a></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>LLM strict_eq</td>
+          <td><code>0x48922d1eA36D36857f657f19d4a1eD79bFb90ae7</code></td>
+          <td><a href="https://explorer-studio.genlayer.com/address/0x48922d1eA36D36857f657f19d4a1eD79bFb90ae7" target="_blank" rel="noopener noreferrer">View ↗</a></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>LLM prompt_comparative</td>
+          <td><code>0xD450B7db20A6724210b36F9225F0536fD3eDCe95</code></td>
+          <td><a href="https://explorer-studio.genlayer.com/address/0xD450B7db20A6724210b36F9225F0536fD3eDCe95" target="_blank" rel="noopener noreferrer">View ↗</a></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Web only</td>
+          <td><code>0x1976685350FDa4c787Bb08BC5bD49AaB89adE5b1</code></td>
+          <td><a href="https://explorer-studio.genlayer.com/address/0x1976685350FDa4c787Bb08BC5bD49AaB89adE5b1" target="_blank" rel="noopener noreferrer">View ↗</a></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Web + LLM combined</td>
+          <td><code>0x4281C29845Cb5320fEc019Ae99E69798E53748cF</code></td>
+          <td><a href="https://explorer-studio.genlayer.com/address/0x4281C29845Cb5320fEc019Ae99E69798E53748cF" target="_blank" rel="noopener noreferrer">View ↗</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Methodology</h2>
+
+    <ul>
+      <li>Each contract was deployed once and executed 3 times</li>
+      <li>Time measured manually from transaction submission to <code>FINALIZED</code> status</li>
+      <li>All transactions used default validator selection (no custom configuration)</li>
+      <li>Tests run on GenLayer Studio hosted environment in March 2026</li>
+    </ul>
+
+    <p>
+      Raw data: <a href="#" target="_blank" rel="noopener noreferrer"><code>data/raw_results.csv</code></a><br>
+      Environment details: <a href="#" target="_blank" rel="noopener noreferrer"><code>data/environment.json</code></a>
+    </p>
+
+    <h2>Recommendations for Developers</h2>
+
+    <ol>
+      <li><strong>Use <code>strict_eq</code> by default</strong> — if output can be constrained to fixed JSON schema, saves ~6s vs <code>prompt_comparative</code></li>
+      <li><strong>Avoid chaining web + LLM</strong> — separate into two transactions if latency matters</li>
+      <li><strong>Design for the ~38s floor</strong> — that's consensus overhead, no amount of code optimization gets below it</li>
+      <li><strong>Account for variance</strong> — individual runs varied 5-15s within the same contract type</li>
+    </ol>
+
+    <h2>Limitations</h2>
+
+    <ul>
+      <li>3 runs per contract is a small sample</li>
+      <li>Results specific to Studio environment (115 validators, 8 models)</li>
+      <li>Local setup or Testnet Bradbury may show different numbers</li>
+      <li>Network conditions and validator load affect results</li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid #30363d; margin: 32px 0;">
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>Tested on GenLayer Studio testnet, March 2026. Part of the GenLayer community research initiative.</em>
+    </p>
+  </article>
+
+</body>
+</html>
