@@ -421,6 +421,77 @@
     color: #58a6ff;
   }
 
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrap {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .sidebar {
+      padding-top: 0;
+    }
+  }
+
   @media (max-width: 768px) {
     body {
       padding: 24px 16px;
@@ -488,18 +559,20 @@
 
   <a href="../blog.html" class="back-link">← Back to Blog</a>
 
-  <article class="blog-post">
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
     <h1>Arc Network × Southeast Asia — Why 680 Million People Need This Chain</h1>
     <div class="meta">Posted on April 17, 2026 • Tags: <span style="color: #8b949e;">Arc Network</span> <span style="color: #8b949e;">Payments</span> <span style="color: #8b949e;">Southeast Asia</span></div>
 
     <img src="../assets/Arc-Network×Southeast-Asia.png" alt="Arc Network x Southeast Asia" class="featured-image" onerror="this.style.display='none'">
 
     <p>
-      <em>680 Million People. $800 Billion in Friction. One Chain That Could Fix It.</em>
+      <em>680 Million People. $130 Billion in Annual Fees. One Settlement Layer Built for It.</em>
     </p>
 
     <p>
-      Why Southeast Asia isn't just Arc's biggest opportunity — it's the proof that stablecoin-native infrastructure was the right call all along.
+      Why Southeast Asia isn't just Arc's most relevant market — it's the region where stablecoin-native infrastructure solves real problems that traditional rails have failed to fix for decades.
     </p>
 
     <hr>
@@ -515,7 +588,7 @@
       </div>
       <div class="stat-item">
         <div class="stat-num">6–8%</div>
-        <div class="stat-label">Average remittance fee — billions lost per year</div>
+        <div class="stat-label">Average remittance cost — well above the 3% UN SDG target</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">$0.01</div>
@@ -536,64 +609,59 @@
     <p>The answer, I believe, is yes. But not for the reasons most people are talking about.</p>
 
     <div class="pull-quote">
-      <p>"The most exciting thing about Arc isn't the technology — it's the specific design choices that make it usable for the billions of people who've been locked out of modern finance."</p>
+      <p>"The most relevant thing about Arc isn't the technology in isolation — it's the specific design choices that make it deployable for the billions of people who've been underserved by modern financial rails."</p>
       <cite>— The argument this article will make</cite>
     </div>
 
     <hr>
 
-    <h2>The Insight: Why Gas Token Volatility Was Always the Hidden Killer</h2>
+    <h2>The Insight: Why Fee Unpredictability Was Always the Hidden Barrier</h2>
 
-    <p>Here's something that rarely gets discussed in Western crypto circles: for businesses and individuals in emerging markets, transaction fee unpredictability is a <em>dealbreaker</em>, not an inconvenience.</p>
+    <p>Here's something that rarely gets discussed in global fintech circles: for businesses and individuals in emerging markets, transaction fee unpredictability is a <em>dealbreaker</em>, not an inconvenience.</p>
 
-    <p>If you're a small merchant in Indonesia accepting crypto payments, you need to know your cost structure to the cent. When Ethereum gas spiked to $50–$200 per transaction in 2021–2022, it didn't just inconvenience wealthy DeFi traders — it made the technology completely unusable for the exact populations it was supposedly going to empower.</p>
+    <p>If you're a small merchant in Indonesia accepting digital payments, you need to know your cost structure to the cent. When onchain transaction fees become volatile — whether denominated in a volatile native asset or subject to network congestion — it makes the technology unsuitable for price-sensitive, high-frequency use cases.</p>
 
-    <p>Arc's design choice to use USDC as the native gas token — targeting $0.01 per transaction — is not a cosmetic feature. It's a foundational design decision that makes the technology actually deployable in price-sensitive markets.</p>
+    <p>Arc's design choice to use USDC as the native gas token — targeting $0.01 per transaction — addresses this directly. It's a foundational infrastructure decision that makes programmable settlement actually deployable in markets where cost certainty is non-negotiable.</p>
 
     <table>
       <thead>
         <tr>
           <th>Method</th>
-          <th>Cost</th>
+          <th>Typical Cost</th>
           <th>Settlement Time</th>
-          <th>Predictability</th>
+          <th>Fee Predictability</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Traditional bank wire (SEA)</td>
-          <td class="bad">6–8% + spread</td>
+          <td>Traditional bank wire (SEA corridor)</td>
+          <td class="bad">6–8% + FX spread</td>
           <td class="bad">2–5 business days</td>
-          <td>Fixed but slow</td>
+          <td>Fixed rate, slow</td>
         </tr>
         <tr>
-          <td>Informal hawala/agents</td>
+          <td>Informal agents / hawala</td>
           <td class="bad">3–5% cash fee</td>
-          <td>1–2 days (informal)</td>
-          <td class="bad">Unreliable, risky</td>
+          <td>1–2 days</td>
+          <td class="bad">Inconsistent, counterparty risk</td>
         </tr>
         <tr>
-          <td>Ethereum (2021 peak)</td>
-          <td class="bad">$10–$200/tx</td>
-          <td>Minutes (if lucky)</td>
-          <td class="bad">Wildly volatile</td>
+          <td>Mobile wallet (GoPay, GCash, etc.)</td>
+          <td>1–3% depending on corridor</td>
+          <td>Minutes to hours</td>
+          <td>Varies by provider</td>
         </tr>
-        <tr>
-          <td>Solana</td>
-          <td>~$0.001/tx</td>
-          <td>&lt; 1 second</td>
-          <td>SOL-denominated, volatile</td>
-        </tr>
-        <tr class="Arc-row">
-          <td><strong>Arc Network</strong></td>
+        <tr class="arc-row">
+          <td><strong>Arc — USDC onchain settlement</strong></td>
           <td class="good">~$0.01 in USDC</td>
-          <td class="good">&lt; 1 second (deterministic)</td>
-          <td class="good">Dollar-stable, predictable</td>
+          <td class="good">&lt;1 second (deterministic)</td>
+          <td class="good">Dollar-stable, programmable</td>
         </tr>
       </tbody>
     </table>
+    <p style="font-size:13px; color:#8b949e; margin-top:-10px;">Sources: World Bank Remittance Prices Worldwide (Q4 2024); Arc documentation (docs.arc.network)</p>
 
-    <p>Notice that Solana's fees are cheap in raw numbers — but they're still SOL-denominated. A small business in the Philippines can't budget in SOL. They budget in PHP or USD. Arc bridges that gap by making the fee itself a stablecoin. It sounds simple. It is profound.</p>
+    <p>The key distinction with stablecoin-native settlement is not just cost — it's that the fee is denominated in dollars. A small business in the Philippines can budget in PHP or USD. Dollar-denominated fees make cost modeling straightforward in a way that volatile-asset-denominated fees never can.</p>
 
     <hr>
 
@@ -606,8 +674,8 @@
     <p>Arc's Malachite BFT consensus delivers deterministic, sub-second finality. There are no chain reorganizations. When a transaction is confirmed, it is final — the same guarantee you get from a physical cash handover, but instant and digital.</p>
 
     <div class="highlight-box">
-      <div class="hb-label">Why this matters in practice</div>
-      <p>For a street merchant: accept USDC payment → confirmed in under 1 second → no settlement risk → same experience as cash, but transferable globally. This is the UX that makes onchain finance actually usable for the populations Arc should be serving.</p>
+      <div class="hb-label">What this looks like in practice</div>
+      <p>A street merchant accepts USDC payment → confirmed in under 1 second → no settlement risk → cash-equivalent certainty, but transferable globally via CCTP. This is the UX that makes onchain finance usable for the populations Arc is built to serve.</p>
     </div>
 
     <hr>
@@ -624,70 +692,11 @@
 
     <h2>The Call to Action: What I'm Building, and Why You Should Too</h2>
 
-    <p>I'm currently exploring how to build a proof-of-concept remittance interface on Arc testnet — targeting the Indonesia-Malaysia corridor, one of the highest-volume intra-SEA remittance routes. The idea is simple: a sender in Malaysia, a recipient in Indonesia, USDC as the bridge currency, and Arc as the settlement layer. Total fees: a fraction of a cent. Settlement time: under one second.</p>
+    <p>I'm currently building a proof-of-concept remittance interface deploying on Arc testnet — targeting the Indonesia-Malaysia corridor, one of the highest-volume intra-SEA remittance routes. The architecture is straightforward: a sender in Malaysia, a recipient in Indonesia, USDC as the settlement currency, and Arc as the settlement layer. Transaction cost: a fraction of a cent. Settlement time: under one second.</p>
 
-    <p>Is this ambitious? Yes. But Arc's developer tooling — the App Kit, EVM compatibility, and CCTP integration — makes it technically approachable even for a solo builder.</p>
+    <p>Arc's developer tooling — the App Kit, EVM compatibility, and CCTP integration — makes this technically approachable for a solo builder. The infrastructure is permissionless and accessible today on testnet.</p>
 
-    <p>If you're reading this from anywhere in Southeast Asia: we are not an afterthought in this story. We are the primary use case. The problems Arc was designed to solve are <em>our problems</em> — and the opportunity to build solutions for 680 million people is sitting in front of us right now, at testnet stage, before the crowds arrive.</p>
-
-    <p>The window is open. Build.</p>
-
-    <hr>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Key Thesis</div>
-      <h3>Why Arc's design fits SEA perfectly</h3>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p>Dollar-stable gas fees eliminate cost unpredictability for merchants and senders</p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p>Sub-second deterministic finality matches cash-like merchant expectations</p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p>CCTP enables cross-border USDC flows across SEA corridors</p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p>EVM compatibility lowers developer onboarding barrier</p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p>Circle's institutional backing = regulatory credibility in tightly-regulated SEA markets</p>
-      </div>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">The Numbers</div>
-      <h3>Remittance Flows into SEA (2024)</h3>
-      <p style="font-size: 0.95rem; margin-bottom: 8px !important;">🇵🇭 Philippines: $36B/yr</p>
-      <p style="font-size: 0.95rem; margin-bottom: 8px !important;">🇻🇳 Vietnam: $19B/yr</p>
-      <p style="font-size: 0.95rem; margin-bottom: 8px !important;">🇮🇩 Indonesia: $14B/yr</p>
-      <p style="font-size: 0.95rem; margin-bottom: 8px !important;">🇲🇾 Malaysia (outbound): ~$10B/yr</p>
-      <p style="font-size: 0.95rem; color: #f85149; font-weight: 500;">At 6% avg fee: ~$4.7B extracted annually in fees alone.</p>
-    </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-title">Further Reading</div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p><a href="https://docs.Arc.network/Arc-chain">Arc Network docs — Arc Chain overview</a></p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p><a href="https://docs.Arc.network/Arc/concepts/stable-fee-design">Stable fee design — how $0.01 gas works</a></p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p><a href="https://docs.Arc.network/Arc/concepts/deterministic-finality">Deterministic finality — the technical case</a></p>
-      </div>
-      <div class="key-point">
-        <div class="key-point-dot"></div>
-        <p><a href="https://faucet.circle.com">Circle Faucet — get testnet USDC</a></p>
-      </div>
-    </div>
+    <p>If you're reading this from anywhere in Southeast Asia: the problems Arc was designed to solve are <em>our problems</em>. The tools are accessible. The testnet is live. What would you build?</p>
 
     <hr>
 
@@ -695,6 +704,42 @@
       <em>Community contribution from Medan, Indonesia — April 2026</em>
     </p>
   </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// key thesis</div>
+        <div class="side-item"><span class="si-dot">▸</span> Dollar-stable gas fees deliver cost predictability</div>
+        <div class="side-item"><span class="si-dot">▸</span> Sub-second deterministic finality matches cash expectations</div>
+        <div class="side-item"><span class="si-dot">▸</span> CCTP enables programmable cross-border USDC flows</div>
+        <div class="side-item"><span class="si-dot">▸</span> EVM compatibility for existing Solidity developers</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// the numbers</div>
+        <div class="side-item"><span class="si-dot">▸</span> Philippines: $36B/yr remittance</div>
+        <div class="side-item"><span class="si-dot">▸</span> Vietnam: $19B/yr remittance</div>
+        <div class="side-item"><span class="si-dot">▸</span> Indonesia: $14B/yr remittance</div>
+        <div class="side-item"><span class="si-dot">▸</span> Myanmar: $3.5B/yr remittance</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// further reading</div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc-chain">Arc docs — network overview</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc/concepts/stable-fee-design">Stable fee design</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc/concepts/deterministic-finality">Deterministic finality</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://faucet.circle.com">Circle Faucet</a></div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> Arc Network</div>
+        <div class="side-item"><span class="si-dot">▸</span> Payments</div>
+        <div class="side-item"><span class="si-dot">▸</span> Southeast Asia</div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

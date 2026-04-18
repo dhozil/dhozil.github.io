@@ -19,7 +19,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
     color: #e6edf3;
-    max-width: 900px;
+    max-width: 1200px;
     margin: auto;
     padding: 40px 20px;
     line-height: 1.8;
@@ -551,6 +551,76 @@
       font-size: 1.25rem;
     }
   }
+
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrap {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      padding-top: 0;
+    }
+  }
   </style>
 </head>
 <body>
@@ -571,7 +641,9 @@
 
   <a href="../blog.html" class="back-link">← Back to Blog</a>
 
-  <article class="blog-post">
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
     <h1>How GenLayer Reaches Consensus Without Trusting Anyone</h1>
     <div class="meta">Posted on April 7, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Consensus</span> <span style="color: #8b949e;">Optimistic Democracy</span></div>
     <p class="subtitle">A visual guide to Optimistic Democracy — GenLayer's mechanism for making AI-powered smart contracts work in a decentralized network.</p>
@@ -700,6 +772,32 @@
       <em>This is part of a series of visual guides to GenLayer's core concepts. Next up: the Equivalence Principle — how validators actually decide if two different outputs mean the same thing.</em>
     </p>
   </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// about this post</div>
+        <div class="side-item"><span class="si-dot">▸</span> How GenLayer reaches consensus</div>
+        <div class="side-item"><span class="si-dot">▸</span> Optimistic Democracy explained</div>
+        <div class="side-item"><span class="si-dot">▸</span> Trustless AI consensus</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// key concepts</div>
+        <div class="side-item"><span class="si-dot">▸</span> Proposal Phase</div>
+        <div class="side-item"><span class="si-dot">▸</span> Challenge Phase</div>
+        <div class="side-item"><span class="si-dot">▸</span> Finality Phase</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> GenLayer</div>
+        <div class="side-item"><span class="si-dot">▸</span> Consensus</div>
+        <div class="side-item"><span class="si-dot">▸</span> Optimistic Democracy</div>
+      </div>
+    </div>
+  </div>
 
 <script>
 const steps = [

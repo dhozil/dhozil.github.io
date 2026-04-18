@@ -68,6 +68,17 @@
     text-decoration: underline;
   }
     
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+  }
+
   .blog-post {
     background: #161b22;
     padding: 40px;
@@ -123,6 +134,56 @@
     text-decoration: underline;
   }
 
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
   .back-link {
     display: inline-block;
     margin-bottom: 30px;
@@ -132,6 +193,16 @@
 
   .back-link:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrap {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .sidebar {
+      padding-top: 0;
+    }
   }
   </style>
 </head>
@@ -152,29 +223,50 @@
 
   <a href="../blog.html" class="back-link">← Back to Blog</a>
 
-  <article class="blog-post">
-    <h1>YOUR POST TITLE HERE</h1>
-    <div class="meta">Posted on DATE • Tags: <span style="color: #8b949e;">TAG1</span> <span style="color: #8b949e;">TAG2</span></div>
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
+        <h1>YOUR POST TITLE HERE</h1>
+        <div class="meta">Posted on DATE • Tags: <span style="color: #8b949e;">TAG1</span> <span style="color: #8b949e;">TAG2</span></div>
 
-    <p>
-      Write your blog post content here. This is where you can share your thoughts, experiences, or tutorials about crypto projects and blockchain technology.
-    </p>
+        <p>
+          Write your blog post content here. This is where you can share your thoughts, experiences, or tutorials about crypto projects and blockchain technology.
+        </p>
 
-    <h2>Section Title</h2>
-    <p>
-      Add more content here. You can use headings to organize your content.
-    </p>
+        <h2>Section Title</h2>
+        <p>
+          Add more content here. You can use headings to organize your content.
+        </p>
 
-    <ul>
-      <li>Point 1</li>
-      <li>Point 2</li>
-      <li>Point 3</li>
-    </ul>
+        <ul>
+          <li>Point 1</li>
+          <li>Point 2</li>
+          <li>Point 3</li>
+        </ul>
 
-    <p>
-      Continue writing your content here...
-    </p>
-  </article>
+        <p>
+          Continue writing your content here...
+        </p>
+      </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// about this post</div>
+        <div class="side-item"><span class="si-dot">▸</span> Add key points about this post</div>
+        <div class="side-item"><span class="si-dot">▸</span> Add relevant information</div>
+        <div class="side-item"><span class="si-dot">▸</span> Add context or resources</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> TAG1</div>
+        <div class="side-item"><span class="si-dot">▸</span> TAG2</div>
+        <div class="side-item"><span class="si-dot">▸</span> TAG3</div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

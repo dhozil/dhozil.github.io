@@ -19,7 +19,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
     color: #e6edf3;
-    max-width: 900px;
+    max-width: 1200px;
     margin: auto;
     padding: 40px 20px;
     line-height: 1.8;
@@ -335,12 +335,78 @@
       height: 250px;
     }
 
-    table {
-      font-size: 0.85rem;
+    .content-wrap {
+      grid-template-columns: 1fr;
     }
+  }
 
-    th, td {
-      padding: 12px 8px;
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrap {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      padding-top: 0;
     }
   }
   </style>
@@ -363,7 +429,9 @@
 
   <a href="../blog.html" class="back-link">← Back to Blog</a>
 
-  <article class="blog-post">
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
     <h1>GenLayer for Beginners: What It Is and How to Join the Builder Program</h1>
     <div class="meta">Posted on March 25, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">AI</span> <span style="color: #8b949e;">Blockchain</span></div>
 
@@ -624,6 +692,32 @@ genlayer localnet start</code></pre>
       Learn more: <a href="https://genlayer.com" target="_blank">genlayer.com</a> | <a href="https://docs.genlayer.com" target="_blank">Docs</a> | <a href="https://discord.gg/genlayer" target="_blank">Discord</a>
     </p>
   </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// about this post</div>
+        <div class="side-item"><span class="si-dot">▸</span> Introduction to GenLayer</div>
+        <div class="side-item"><span class="si-dot">▸</span> How to join the builder program</div>
+        <div class="side-item"><span class="si-dot">▸</span> Getting started guide</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// key concepts</div>
+        <div class="side-item"><span class="si-dot">▸</span> Intelligent Contracts</div>
+        <div class="side-item"><span class="si-dot">▸</span> Optimistic Democracy</div>
+        <div class="side-item"><span class="si-dot">▸</span> Equivalence Principle</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> GenLayer</div>
+        <div class="side-item"><span class="si-dot">▸</span> AI</div>
+        <div class="side-item"><span class="si-dot">▸</span> Blockchain</div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

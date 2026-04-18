@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Southeast Asia Has 60 Million Gig Workers. They Get Paid Once a Day — at Best. - DhoziL Validator</title>
+  <link rel="icon" href="../dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 6px rgba(0, 240, 255, 0.6),
+      0 0 14px rgba(0, 240, 255, 0.4),
+      0 0 25px rgba(0, 240, 255, 0.25);
+    transition: 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 12px #00f0ff,
+      0 0 25px #00f0ff,
+      0 0 30px rgba(0, 240, 255, 0.7);
+  }
+
+  .header-text h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .header-text p {
+    margin: 5px 0 0 0;
+    color: #8b949e;
+    font-size: 0.9rem;
+  }
+
+  .nav {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 24px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    text-decoration: none;
+    background: rgba(88, 166, 255, 0.1);
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .highlight {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .highlight p {
+    margin: 0;
+    color: #e6edf3;
+    font-weight: 500;
+  }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .data-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .data-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #58a6ff;
+    margin-bottom: 8px;
+  }
+
+  .data-label {
+    font-size: 0.85rem;
+    color: #8b949e;
+    line-height: 1.5;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .compare-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .compare-card.good {
+    border-color: #3fb950;
+  }
+
+  .compare-card.bad {
+    opacity: 0.7;
+  }
+
+  .compare-title {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #8b949e;
+    margin-bottom: 16px;
+    letter-spacing: 0.08em;
+  }
+
+  .compare-card.good .compare-title {
+    color: #3fb950;
+  }
+
+  .compare-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #c9d1d9;
+  }
+
+  .ci-dot {
+    color: #3fb950;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .ci-dot.x {
+    color: #f85149;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 36px;
+    width: 1px;
+    height: calc(100% - 12px);
+    background: #30363d;
+  }
+
+  .flow-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1f3d5c;
+    border: 1px solid #58a6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .flow-content {
+    flex: 1;
+  }
+
+  .flow-title {
+    font-weight: 600;
+    color: #e6edf3;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .flow-desc {
+    font-size: 0.85rem;
+    color: #8b949e;
+    line-height: 1.6;
+  }
+
+  .flow-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: #1f3d5c;
+    color: #58a6ff;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+
+    .data-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .compare-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+    max-width: 800px;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
+  .stat-row {
+    background: #1c2128;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: #8b949e;
+  }
+
+  .stat-value {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #e6edf3;
+    font-weight: 500;
+  }
+
+  .stat-value.good {
+    color: #3fb950;
+  }
+
+  .stat-value.bad {
+    color: #f85149;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrap {
+      grid-template-columns: 1fr;
+    }
+    .sidebar {
+      padding-top: 0;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="../assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="../index.html">Home</a>
+    <a href="../builder-projects.html">Builder Projects</a>
+    <a href="../blog.html" class="active">Blog</a>
+  </nav>
+
+  <a href="../blog.html" class="back-link">← Back to Blog</a>
+
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
+        <h1>Southeast Asia Has 60 Million Gig Workers. They Get Paid Once a Day — at Best.</h1>
+        <div class="meta">Posted on April 18, 2026 • Tags: <span style="color: #8b949e;">Arc</span> <span style="color: #8b949e;">Gig Economy</span> <span style="color: #8b949e;">Payments</span> <span style="color: #8b949e;">Southeast Asia</span></div>
+
+        <p class="subtitle">Grab drivers, freelancers, couriers, remote contractors. They settle their labor in real time. Their payment doesn't. Here's what programmable, onchain settlement could change — and what I'm exploring building on Arc testnet to prove it.</p>
+
+        <hr>
+
+        <div class="data-grid">
+          <div class="data-card">
+            <div class="data-num">60M+</div>
+            <div class="data-label">Gig workers active across SEA (ADB, 2023)</div>
+          </div>
+          <div class="data-card">
+            <div class="data-num">24hrs</div>
+            <div class="data-label">Typical minimum payout cycle for platform workers</div>
+          </div>
+          <div class="data-card">
+            <div class="data-num">&lt;1s</div>
+            <div class="data-label">Arc transaction finality — deterministic, no reorgs</div>
+          </div>
+          <div class="data-card">
+            <div class="data-num">$0.01</div>
+            <div class="data-label">Target cost per Arc transaction in USDC</div>
+          </div>
+        </div>
+
+        <h2>You Finish a Job. The Money Waits.</h2>
+
+        <p>
+          My neighbor drives for a ride-hailing platform here in Medan. He finishes his last ride at 11 PM. His earnings from that ride — and every ride that day — get settled the following afternoon at the earliest. Sometimes the next day. Sometimes two days later if there's a processing issue.
+        </p>
+
+        <p>
+          He's not waiting because settlement is technically hard. He's waiting because the system was built around batch processing cycles designed for banks, not for workers who need liquidity today to fuel their motorcycle tomorrow morning.
+        </p>
+
+        <p>
+          This pattern repeats across 60 million gig workers in Southeast Asia. Grab drivers in Jakarta. Lalamove couriers in Manila. Freelance designers in Ho Chi Minh City invoicing clients in Singapore. Remote developers in Bandung getting paid by European startups. Every one of them has a settlement delay baked into their financial life — not because the work is slow, but because the payment infrastructure is.
+        </p>
+
+        <div class="highlight">
+          <p><strong>Core insight:</strong> Gig work is real-time. Gig payment is batch-processed. That gap is not a technical limitation — it's an infrastructure choice. Onchain settlement with deterministic finality is the first credible alternative.</p>
+        </div>
+
+        <h2>Instant Settlement Is Not a Feature. It's the Product.</h2>
+
+        <p>
+          Most discussions about Arc focus on institutional use cases — capital markets, FX, treasury management. These are real and important. But the same infrastructure that settles a $10M institutional trade in under a second can also settle a $4 Grab ride the moment it ends.
+        </p>
+
+        <p>
+          The technical characteristics that make Arc suitable for institutional finance are identical to what makes per-job micropayment settlement viable for gig workers:
+        </p>
+
+        <div class="compare-grid">
+          <div class="compare-card bad">
+            <div class="compare-title">// current platform payout model</div>
+            <div class="compare-item"><span class="ci-dot x">✕</span> Earnings pooled and batch-settled daily or weekly</div>
+            <div class="compare-item"><span class="ci-dot x">✕</span> Workers float operational costs until payout</div>
+            <div class="compare-item"><span class="ci-dot x">✕</span> Settlement delays compound across currency conversion</div>
+            <div class="compare-item"><span class="ci-dot x">✕</span> Platform holds float — effectively interest-free loan from workers</div>
+            <div class="compare-item"><span class="ci-dot x">✕</span> Disputes freeze entire pending balance</div>
+          </div>
+          <div class="compare-card good">
+            <div class="compare-title">// onchain per-job settlement on Arc</div>
+            <div class="compare-item"><span class="ci-dot">✓</span> USDC released per completed job, sub-second finality</div>
+            <div class="compare-item"><span class="ci-dot">✓</span> Worker holds liquidity, not the platform</div>
+            <div class="compare-item"><span class="ci-dot">✓</span> Dollar-denominated — no FX conversion lag</div>
+            <div class="compare-item"><span class="ci-dot">✓</span> Transaction cost: ~$0.01 per settlement in USDC</div>
+            <div class="compare-item"><span class="ci-dot">✓</span> Programmable — escrow logic in smart contract</div>
+          </div>
+        </div>
+
+        <p>
+          The key enabler here is Arc's stable fee design. At $0.01 per transaction in USDC, settling a $4 ride costs a fraction of a percent in fees — far below the 1–3% processing fees platforms currently pay for traditional payment rails. At scale, this changes the economics of per-job settlement from "not viable" to "clearly better."
+        </p>
+
+        <h2>What a Per-Job Settlement System Actually Looks Like</h2>
+
+        <p>
+          I've been sketching out how this would work on Arc testnet. The architecture is simpler than most people assume — EVM compatibility means you're working with familiar Solidity patterns. Here's the core flow:
+        </p>
+
+        <div class="flow-step">
+          <div class="flow-num">01</div>
+          <div class="flow-content">
+            <div class="flow-title">Platform pre-funds a smart contract escrow in USDC</div>
+            <div class="flow-desc">Platform deposits USDC into a job registry contract before the session starts. Funds are earmarked per worker address.</div>
+            <span class="flow-tag">Arc EVM · Solidity</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-num">02</div>
+          <div class="flow-content">
+            <div class="flow-title">Worker completes a job — platform backend triggers release</div>
+            <div class="flow-desc">On job completion, platform API calls the contract's release() function. Can be automated or require platform confirmation.</div>
+            <span class="flow-tag">USDC · App Kit</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-num">03</div>
+          <div class="flow-content">
+            <div class="flow-title">USDC transfers to worker wallet — finality in under 1 second</div>
+            <div class="flow-desc">Malachite BFT finalizes the transfer deterministically. No reorg risk. Worker's USDC balance updates immediately.</div>
+            <span class="flow-tag">Deterministic finality · &lt;1s</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-num">04</div>
+          <div class="flow-content">
+            <div class="flow-title">Worker spends or bridges USDC cross-border via CCTP</div>
+            <div class="flow-desc">USDC is spendable directly, or bridgeable to other chains via CCTP for local cash-out. No waiting for batch settlement.</div>
+            <span class="flow-tag">CCTP · Cross-chain</span>
+          </div>
+        </div>
+
+        <pre><code>// Conceptual sketch — deploying on Arc testnet
+contract JobEscrow {
+  mapping(address => uint256) public workerBalance;
+  address public usdcToken;
+
+  // Platform pre-funds per worker
+  function deposit(address worker, uint256 amount) external {
+    IERC20(usdcToken).transferFrom(msg.sender, address(this), amount);
+    workerBalance[worker] += amount;
+  }
+
+  // Release on job completion — sub-second finality on Arc
+  function releasePayment(address worker, uint256 jobAmount) external {
+    workerBalance[worker] -= jobAmount;
+    IERC20(usdcToken).transfer(worker, jobAmount);
+  }
+}</code></pre>
+
+        <p>
+          The contract is intentionally minimal here — a production version would add access control, dispute resolution logic, and platform fee deduction. But the core mechanic is this simple. Arc's EVM compatibility means any Solidity developer can start building on this pattern today using familiar tooling.
+        </p>
+
+        <h2>Can a Grab Driver in Medan Actually Use This?</h2>
+
+        <p>
+          The honest answer today is: not directly. The UX layer isn't there yet for non-technical end users. But that's exactly what makes this a builder opportunity, not a blocker.
+        </p>
+
+        <p>
+          The infrastructure question — "can USDC settle in under one second for $0.01?" — is already answered by Arc testnet. What remains is the application layer: a wallet interface a gig worker can use without knowing what a blockchain is, a fiat on/off-ramp integrated into the flow, and a platform-side integration that triggers settlement on job completion.
+        </p>
+
+        <p>
+          Each of those is a buildable thing. And the combination of Arc's App Kit, Circle's developer-controlled wallets, and CCTP for cross-border USDC movement gives builders a real stack to work with — not a whiteboard promise.
+        </p>
+
+        <div class="highlight">
+          <p><strong>What I'm exploring on testnet:</strong> A minimal proof-of-concept: one simulated job, one escrow contract, one release trigger, one USDC transfer — all on Arc testnet. The goal is to get the settlement flow working end-to-end and document it clearly enough that other SEA builders can fork it and adapt it for their own corridors and use cases.</p>
+        </div>
+
+        <h2>This Is What "Internet Financial System" Means in Practice</h2>
+
+        <p>
+          Arc's framing as the "Economic OS for the internet" resonates differently when you apply it to a Grab driver in Medan versus an institutional trader in London. For the driver, the internet financial system isn't abstract — it's whether he can fuel his motorcycle before the bank processes his payout.
+        </p>
+
+        <p>
+          Programmable, stablecoin-native settlement doesn't need a whitepaper to be compelling. It just needs to work — reliably, cheaply, and fast enough that the settlement happens before the worker finishes their next job.
+        </p>
+
+        <p>
+          That's what I'm trying to build a small proof of. If you're working on similar problems — gig payroll, freelancer invoicing, micro-settlement infrastructure for SEA workers — I'd like to compare notes.
+        </p>
+
+        <p>
+          Deploy on Arc testnet. The faucet is live. The EVM tools work. What would you build?
+        </p>
+      </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// why this use case fits Arc</div>
+        <div class="side-item"><span class="si-dot">▸</span> $0.01/tx fee makes micropayment settlement economically viable</div>
+        <div class="side-item"><span class="si-dot">▸</span> Sub-second deterministic finality = no settlement risk for workers</div>
+        <div class="side-item"><span class="si-dot">▸</span> USDC-denominated = no FX volatility exposure</div>
+        <div class="side-item"><span class="si-dot">▸</span> EVM-compatible = buildable with existing Solidity skills</div>
+        <div class="side-item"><span class="si-dot">▸</span> CCTP enables cross-border cash-out across SEA corridors</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// settlement model comparison</div>
+        <div class="stat-row">
+          <span class="stat-label">Traditional payout cycle</span>
+          <span class="stat-value bad">24–48h</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Mobile wallet settlement</span>
+          <span class="stat-value">Minutes–hours</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Arc onchain settlement</span>
+          <span class="stat-value good">&lt;1 second</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Arc tx fee (USDC)</span>
+          <span class="stat-value good">~$0.01</span>
+        </div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// testnet resources</div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://faucet.circle.com" target="_blank">Circle Faucet — get testnet USDC</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc/tutorials/deploy-contracts" target="_blank">Deploy contracts on Arc</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc/tutorials/transfer-usdc-or-eurc" target="_blank">Send USDC on Arc</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc/concepts/stable-fee-design" target="_blank">Stable fee design docs</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://testnet.arcscan.app" target="_blank">Arc testnet explorer</a></div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// open questions</div>
+        <div class="side-item"><span class="si-dot">▸</span> Best pattern for dispute resolution in escrow contracts?</div>
+        <div class="side-item"><span class="si-dot">▸</span> Optimal CCTP flow for IDR/PHP cash-out via USDC?</div>
+        <div class="side-item"><span class="si-dot">▸</span> Anyone else building for gig/freelancer corridors in SEA?</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> Arc</div>
+        <div class="side-item"><span class="si-dot">▸</span> Gig Economy</div>
+        <div class="side-item"><span class="si-dot">▸</span> Payments</div>
+        <div class="side-item"><span class="si-dot">▸</span> Southeast Asia</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

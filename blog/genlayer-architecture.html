@@ -19,7 +19,7 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
     color: #e6edf3;
-    max-width: 900px;
+    max-width: 1200px;
     margin: auto;
     padding: 40px 20px;
     line-height: 1.8;
@@ -519,6 +519,67 @@
     margin-top: 4px;
   }
 
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
   .val-card {
     border-radius: 6px;
     padding: 8px;
@@ -696,7 +757,9 @@
 
   <a href="../blog.html" class="back-link">← Back to Blog</a>
 
-  <article class="blog-post">
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
     <h1>GenLayer Architecture, Layer by Layer</h1>
     <div class="meta">Posted on April 7, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Architecture</span> <span style="color: #8b949e;">Technical</span></div>
     <p class="subtitle">A visual walkthrough of how everything connects — from your dApp frontend down to the external world of LLMs and live web data.</p>
@@ -1085,6 +1148,33 @@ class MyContract(gl.Contract):
       <em>This is part of a series of visual guides to GenLayer's core concepts. Previous pieces covered Optimistic Democracy and the Equivalence Principle.</em>
     </p>
   </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// about this post</div>
+        <div class="side-item"><span class="si-dot">▸</span> Visual walkthrough of GenLayer architecture</div>
+        <div class="side-item"><span class="si-dot">▸</span> Layer-by-layer explanation</div>
+        <div class="side-item"><span class="si-dot">▸</span> Interactive layer diagrams</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// key layers</div>
+        <div class="side-item"><span class="si-dot">▸</span> Application Layer</div>
+        <div class="side-item"><span class="si-dot">▸</span> Node Layer</div>
+        <div class="side-item"><span class="si-dot">▸</span> Validator Layer</div>
+        <div class="side-item"><span class="si-dot">▸</span> External World Layer</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> GenLayer</div>
+        <div class="side-item"><span class="si-dot">▸</span> Architecture</div>
+        <div class="side-item"><span class="si-dot">▸</span> Technical</div>
+      </div>
+    </div>
+  </div>
 
 <script>
 function toggleLayer(el) {
