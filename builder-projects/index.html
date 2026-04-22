@@ -106,8 +106,55 @@
     color: #00f0ff;
   }
 
+  .filter-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .filter-tab {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .filter-tab:hover {
+    background: #30363d;
+    color: #c9d1d9;
+  }
+
+  .filter-tab.active {
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    border-color: #58a6ff;
+    color: #ffffff;
+  }
+
   .projects-container {
     animation: fadeIn 0.6s ease 0.2s backwards;
+  }
+
+  .projects-container h2 {
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .projects-container p {
+    background: linear-gradient(90deg, #8b949e 0%, #c9d1d9 50%, #8b949e 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 500;
   }
 
   .project-card {
@@ -279,11 +326,17 @@
 
   <div class="projects-container">
     <h2 style="color: #e6edf3; margin-bottom: 32px; font-size: 2rem;">Builder Projects</h2>
-    <p style="color: #8b949e; margin-bottom: 40px; font-size: 1.1rem;">
+    <p style="color: #8b949e; margin-bottom: 24px; font-size: 1.1rem;">
       Projects built by dhozil
     </p>
 
-    <div class="project-card">
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All Projects</button>
+      <button class="filter-tab" data-filter="genlayer">GenLayer</button>
+      <button class="filter-tab" data-filter="arc">Arc</button>
+    </div>
+
+    <div class="project-card" data-category="arc">
       <img src="/assets/arc-payroll-system.png" alt="Arc Payroll System" class="thumbnail" onerror="this.style.display='none'">
       <h3>Arc Payroll System — Decentralized Payroll Management on Arc Testnet</h3>
       <div class="date">Released April 21, 2026</div>
@@ -302,7 +355,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="genlayer">
       <img src="/assets/Crypto-News-Hub.png" alt="Crypto News Hub" class="thumbnail" onerror="this.style.display='none'">
       <h3>Crypto News Hub - AI-Powered Crypto News Platform</h3>
       <div class="date">Hackathon Project</div>
@@ -320,7 +373,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="genlayer">
       <img src="/assets/Road-Survival.png" alt="Road Survival" class="thumbnail" onerror="this.style.display='none'">
       <h3>Road Survival - Multiplayer Racing Game</h3>
       <div class="date">Released April 14, 2026</div>
@@ -338,7 +391,7 @@
       </div>
     </div>
 
-    <div class="project-card">
+    <div class="project-card" data-category="genlayer">
       <img src="/assets/DeepChain-Fishing.png" alt="DeepChain Fishing" class="thumbnail" onerror="this.style.display='none'">
       <h3>DeepChain Fishing — Fully On-Chain Game on GenLayer</h3>
       <div class="date">Released April 13, 2026</div>
@@ -357,6 +410,35 @@
     </div>
 
   </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Remove active class from all tabs
+      filterTabs.forEach(t => t.classList.remove('active'));
+      // Add active class to clicked tab
+      this.classList.add('active');
+
+      const filter = this.getAttribute('data-filter');
+
+      projectCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'block';
+          card.style.animation = 'fadeIn 0.3s ease';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
 
 </body>
 </html>

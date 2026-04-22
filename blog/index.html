@@ -105,12 +105,45 @@
     background: rgba(88, 166, 255, 0.15);
     color: #00f0ff;
   }
-    
+
+  .filter-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .filter-tab {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .filter-tab:hover {
+    background: #30363d;
+    color: #c9d1d9;
+  }
+
+  .filter-tab.active {
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    border-color: #58a6ff;
+    color: #ffffff;
+  }
+
   h2 {
     margin-top: 48px;
     font-size: 2rem;
     font-weight: 700;
-    color: #e6edf3;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     animation: fadeIn 0.6s ease 0.2s backwards;
   }
 
@@ -341,9 +374,16 @@
     <input type="text" id="searchInput" class="search-input" placeholder="Search blog posts...">
   </div>
 
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All Posts</button>
+    <button class="filter-tab" data-filter="genlayer">GenLayer</button>
+    <button class="filter-tab" data-filter="arc">Arc</button>
+    <button class="filter-tab" data-filter="crypto">Crypto</button>
+  </div>
+
   <div class="blog-container" id="blogContainer">
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="arc">
       <img src="/assets/Arc-gig-economy.png" alt="Arc Network" class="thumbnail" onerror="this.style.display='none'">
       <h3>Southeast Asia Has 60 Million Gig Workers. They Get Paid Once a Day — at Best.</h3>
       <div class="date">April 18, 2026</div>
@@ -359,7 +399,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="arc">
       <img src="/assets/ARC-Network×Southeast-Asia.png" alt="Arc Network" class="thumbnail" onerror="this.style.display='none'">
       <h3>Arc Network × Southeast Asia — Why 680 Million People Need This Chain</h3>
       <div class="date">April 17, 2026</div>
@@ -374,7 +414,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="genlayer">
       <img src="/assets/GenLayer-Architecture.png" alt="GenLayer Architecture" class="thumbnail" onerror="this.style.display='none'">
       <h3>GenLayer Architecture, Layer by Layer</h3>
       <div class="date">April 7, 2026</div>
@@ -389,7 +429,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="genlayer">
       <img src="/assets/The-Equivalence-Principle.png" alt="The Equivalence Principle" class="thumbnail" onerror="this.style.display='none'">
       <h3>The Equivalence Principle: How GenLayer Validators Agree on AI Outputs</h3>
       <div class="date">April 7, 2026</div>
@@ -404,7 +444,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="genlayer">
       <img src="/assets/Optimistic-Democracy.png" alt="Optimistic Democracy" class="thumbnail" onerror="this.style.display='none'">
       <h3>How GenLayer Reaches Consensus Without Trusting Anyone</h3>
       <div class="date">April 7, 2026</div>
@@ -419,7 +459,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="genlayer">
       <img src="/assets/genlayer-benchmark.png" alt="GenLayer Benchmark" class="thumbnail" onerror="this.style.display='none'">
       <h3>GenLayer Intelligent Contract — Execution Performance Benchmark</h3>
       <div class="date">April 4, 2026</div>
@@ -434,7 +474,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="genlayer">
       <img src="/assets/News-Sentiment-Oracle.png" alt="News Sentiment Oracle" class="thumbnail" onerror="this.style.display='none'">
       <h3>Build a News Sentiment Oracle on GenLayer — Tutorial</h3>
       <div class="date">March 27, 2026</div>
@@ -449,7 +489,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="genlayer">
       <img src="/assets/genlayer-logo.png" alt="GenLayer" class="thumbnail" onerror="this.style.display='none'">
       <h3>GenLayer for Beginners: What It Is and How to Join the Builder Program</h3>
       <div class="date">March 25, 2026</div>
@@ -464,7 +504,7 @@
       </div>
     </div>
 
-    <div class="blog-post">
+    <div class="blog-post" data-category="crypto">
       <h3>Getting Started with Crypto Validation: My Journey</h3>
       <div class="date">March 20, 2026</div>
       <div class="excerpt">
@@ -484,7 +524,32 @@
 const searchInput = document.getElementById('searchInput');
 const blogContainer = document.getElementById('blogContainer');
 const blogPosts = blogContainer.querySelectorAll('.blog-post');
+const filterTabs = document.querySelectorAll('.filter-tab');
 
+// Filter tabs functionality
+filterTabs.forEach(tab => {
+  tab.addEventListener('click', function() {
+    // Remove active class from all tabs
+    filterTabs.forEach(t => t.classList.remove('active'));
+    // Add active class to clicked tab
+    this.classList.add('active');
+
+    const filter = this.getAttribute('data-filter');
+
+    blogPosts.forEach(post => {
+      const category = post.getAttribute('data-category');
+
+      if (filter === 'all' || category === filter) {
+        post.style.display = 'block';
+        post.style.animation = 'fadeIn 0.3s ease';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Search functionality
 searchInput.addEventListener('input', function(e) {
   const searchTerm = e.target.value.toLowerCase();
   let hasResults = false;
