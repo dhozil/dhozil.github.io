@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unified Balance Kit Meets Streaming Payments — What Changes for Builders on Arc - DhoziL Validator</title>
+  <link rel="icon" href="/dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+    
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+    
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post em {
+    color: #58a6ff;
+    font-style: italic;
+  }
+
+  .blog-post code {
+    background: #21262d;
+    padding: 3px 10px;
+    border-radius: 6px;
+    color: #58a6ff;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .blog-post pre {
+    background: #21262d;
+    padding: 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin-bottom: 24px;
+    border: 1px solid #30363d;
+  }
+
+  .blog-post pre code {
+    background: none;
+    padding: 0;
+    color: #c9d1d9;
+    font-size: 0.9em;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .highlight-box h3 {
+    color: #3fb950;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .highlight-box p {
+    margin: 0;
+  }
+
+  .warn-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #d29922;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .warn-box h3 {
+    color: #d29922;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .warn-box p {
+    margin: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 36px;
+    width: 1px;
+    height: calc(100% - 12px);
+    background: #30363d;
+  }
+
+  .flow-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1f3d5c;
+    border: 1px solid #58a6ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .flow-content {
+    flex: 1;
+  }
+
+  .flow-title {
+    font-weight: 600;
+    color: #e6edf3;
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .flow-desc {
+    font-size: 0.85rem;
+    color: #8b949e;
+    line-height: 1.6;
+  }
+
+  .flow-tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: #1f3d5c;
+    color: #58a6ff;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+    background: #21262d;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #30363d;
+  }
+
+  th {
+    background: #30363d;
+    color: #e6edf3;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  td {
+    color: #c9d1d9;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .good {
+    color: #3fb950;
+    font-weight: 500;
+  }
+
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .main {
+    padding: 20px 0;
+    max-width: 800px;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    padding: 20px 0;
+  }
+
+  .side-card {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .side-title {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    color: #8b949e;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .side-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #c9d1d9;
+    line-height: 1.5;
+  }
+
+  .si-dot {
+    color: #58a6ff;
+    flex-shrink: 0;
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .side-card a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  .side-card a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+
+    .content-wrap {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .sidebar {
+      padding-top: 0;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="/assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Crypto Blog & Insights</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/builder-projects/">Builder Projects</a>
+    <a href="/blog/" class="active">Blog</a>
+  </nav>
+
+  <a href="/blog/" class="back-link">← Back to Blog</a>
+
+  <div class="content-wrap">
+    <div class="main">
+      <article class="blog-post">
+        <h1>Unified Balance Kit Meets <em>Streaming Payments</em> — What Changes for Builders on Arc</h1>
+        <div class="meta">Posted on April 28, 2026 • Tags: <span style="color: #8b949e;">Unified Balance Kit</span> <span style="color: #8b949e;">StreamPay</span> <span style="color: #8b949e;">Tutorial</span> <span style="color: #8b949e;">USDC</span> <span style="color: #8b949e;">Arc</span> <span style="color: #8b949e;">TypeScript</span></div>
+
+        <img src="/assets/Arc-builder.PNG" alt="Arc builder" class="featured-image" onerror="this.style.display='none'">
+
+        <p>
+          <strong>Arc released the Unified Balance Kit four days ago.</strong> I've been integrating it with StreamPay — a real-time USDC streaming protocol I built on Arc testnet. Here's what changed, what it unlocked, and the code patterns that actually work.
+        </p>
+
+        <hr>
+
+        <h2>What StreamPay Does, and the Problem It Had</h2>
+
+        <p>StreamPay is a payment streaming protocol I deployed on Arc testnet: lock USDC, it flows per second to a recipient, they withdraw anytime. Contract address: <code>0x46937C3663...a54B</code>.</p>
+
+        <p>The original version has one friction point for real use: <strong>funding the stream requires the user to already have USDC on Arc testnet</strong>. If they have USDC on Ethereum Sepolia or Avalanche Fuji, they need to bridge first, then approve, then create the stream — three separate steps across two different interfaces before a single dollar flows.</p>
+
+        <p>The Unified Balance Kit changes this entirely. Instead of managing a chain-specific USDC balance, a user can hold a <strong>unified USDC balance</strong> — funded from any supported chain — and spend it directly into StreamPay on Arc. One balance, one approval flow, one stream creation.</p>
+
+        <div class="highlight-box">
+          <h3>What Unified Balance Kit actually is</h3>
+          <p>A TypeScript SDK that wraps Circle Gateway's unified-balance model. One interface for <code>deposit</code>, <code>getBalances</code>, <code>estimateSpend</code>, and <code>spend</code> across supported chains — without building custom multichain routing logic.</p>
+        </div>
+
+        <hr>
+
+        <h2>The New Flow: Deposit Anywhere, Stream on <em>Arc</em></h2>
+
+        <p>Here's what the updated flow looks like. The key insight is that Gateway's unified balance acts as a funding layer sitting above the chain-specific escrow in StreamPay.</p>
+
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-content">
+            <div class="flow-title">User deposits USDC from any supported chain</div>
+            <div class="flow-desc">kit.deposit() — funds Gateway Wallet contract, credits unified balance. Works from Ethereum Sepolia, Avalanche Fuji, Base Sepolia, or Arc Testnet.</div>
+            <span class="flow-tag">kit.deposit() · UnifiedBalanceKit</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-content">
+            <div class="flow-title">Check unified balance across all chains</div>
+            <div class="flow-desc">kit.getBalances() returns a chain-agnostic view. Show user their available USDC without chain switching.</div>
+            <span class="flow-tag">kit.getBalances() · includePending: true</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-content">
+            <div class="flow-title">Estimate fees before committing</div>
+            <div class="flow-desc">kit.estimateSpend() simulates the spend offchain. User sees exact fees before signing — no surprises.</div>
+            <span class="flow-tag">kit.estimateSpend() · Preview before tx</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-content">
+            <div class="flow-title">Spend from unified balance → fund StreamPay escrow on Arc</div>
+            <div class="flow-desc">kit.spend() routes from unified balance to Arc. StreamPay's createStream() receives USDC, stream begins. Sub-second finality — recipient earns before next second ticks.</div>
+            <span class="flow-tag">kit.spend() → createStream() · Arc sub-second finality</span>
+          </div>
+        </div>
+
+        <hr>
+
+        <h2>Implementation — Setting Up the <em>Kit</em></h2>
+
+        <p>First, install the SDK. Unified Balance Kit is part of Arc App Kits:</p>
+
+        <pre><code>npm install @circle-fin/unified-balance-kit
+npm install @circle-fin/developer-controlled-wallets</code></pre>
+
+        <p>Initialize the kit with an EVM adapter pointing at Arc Testnet:</p>
+
+        <pre><code>import { UnifiedBalanceKit, EvmAdapter } from '@circle-fin/unified-balance-kit';
+import { initiateUserControlledWalletsClient } from '@circle-fin/user-controlled-wallets';
+
+// Arc Testnet RPC — USDC is the native gas token here
+const ARC_RPC = 'https://rpc.testnet.arc.network';
+const ARC_CHAIN_ID = 5042002;
+
+// Initialize EVM adapter for Arc
+const evmAdapter = new EvmAdapter({
+  rpcUrl: ARC_RPC,
+  chainId: ARC_CHAIN_ID,
+});
+
+// Initialize the kit
+const kit = new UnifiedBalanceKit({
+  apiKey: process.env.CIRCLE_API_KEY,
+  adapters: [evmAdapter],
+});</code></pre>
+
+        <hr>
+
+        <h2>Checking Balances Across All Chains at Once</h2>
+
+        <p>Before StreamPay, the user experience required knowing which chain their USDC was on. With <code>getBalances</code>, that disappears:</p>
+
+        <pre><code>async function getUnifiedBalance(walletAddress: string) {
+  const balances = await kit.getBalances({
+    sources: { account: walletAddress },
+    networkType: 'testnet',
+    includePending: true, // include deposits still finalizing
+  });
+
+  // Returns chain-agnostic unified total
+  // No need to query Arc, Sepolia, Fuji separately
+  console.log(`Unified USDC: ${balances.unified.amount}`);
+  console.log(`On Arc: ${balances.chains['Arc_Testnet']?.amount ?? '0'}`);
+
+  return balances;
+}</code></pre>
+
+        <hr>
+
+        <h2>Spending Into StreamPay — the Key Integration</h2>
+
+        <p>This is the pattern that eliminates the bridge-first requirement. The user has USDC in their unified balance; we route it to Arc and fund the stream escrow in one flow:</p>
+
+        <pre><code>import { ethers } from 'ethers';
+
+const STREAMPAY_ADDR = '0x46937C3663101b3fE7F282A49F397d1f5C17a54B';
+const USDC_ARC     = '0x3600000000000000000000000000000000000000';
+
+// Step 1: Estimate fees before committing
+async function estimateStreamFunding(
+  walletAddress: string,
+  amountUsdc: string // e.g. "10.00"
+) {
+  const estimate = await kit.estimateSpend({
+    amount: amountUsdc,
+    from: {
+      adapter: evmAdapter,
+      allocations: { amount: amountUsdc, chain: 'Arc_Testnet' },
+    },
+    to: {
+      adapter: evmAdapter,
+      chain: 'Arc_Testnet',
+      recipientAddress: STREAMPAY_ADDR, // StreamPay escrow
+    },
+    token: 'USDC',
+  });
+
+  // Show user: amount + estimated fees before they sign
+  return {
+    amount: estimate.amount,
+    fees: estimate.fees,
+    total: estimate.totalCost,
+  };
+}
+
+// Step 2: Spend from unified balance → StreamPay escrow
+async function fundAndCreateStream(
+  walletAddress: string,
+  recipient:     string,
+  amountUsdc:    string,
+  durationSecs:  number,
+  label:         string
+) {
+  // 1. Route USDC from unified balance to StreamPay on Arc
+  const spendResult = await kit.spend({
+    amount: amountUsdc,
+    from: {
+      adapter: evmAdapter,
+      allocations: { amount: amountUsdc, chain: 'Arc_Testnet' },
+    },
+    to: {
+      adapter: evmAdapter,
+      chain: 'Arc_Testnet',
+      recipientAddress: STREAMPAY_ADDR,
+    },
+    token: 'USDC',
+  });
+
+  // 2. Call createStream() on StreamPay contract
+  // USDC already in escrow — Arc finalizes in <1 second
+  const provider = new ethers.JsonRpcProvider(ARC_RPC);
+  const signer   = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+
+  const streamPay = new ethers.Contract(STREAMPAY_ADDR, [
+    'function createStream(address,uint256,uint256,string) returns (uint256)',
+  ], signer);
+
+  const amountRaw = ethers.parseUnits(amountUsdc, 6); // 6-decimal ERC-20
+  const tx = await streamPay.createStream(
+    recipient, amountRaw, BigInt(durationSecs), label
+  );
+
+  const receipt = await tx.wait();
+  console.log(`Stream live. Tx: ${receipt.hash}`);
+  return receipt;
+}</code></pre>
+
+        <div class="warn-box">
+          <h3>Decimal context — avoid the common mistake</h3>
+          <p>Unified Balance Kit amounts use human-readable strings like <code>"10.00"</code>. StreamPay's <code>createStream()</code> expects 6-decimal raw integers (<code>10_000_000</code> for 10 USDC). Always convert with <code>ethers.parseUnits(amount, 6)</code> before passing to the contract — never to <code>parseEther</code>.</p>
+        </div>
+
+        <hr>
+
+        <h2>What This Changes for the SEA Use Case</h2>
+
+        <p>I've been writing about the Southeast Asia remittance angle — 60M+ gig workers waiting 24–48 hours for platform payouts. The original StreamPay required users to have USDC specifically on Arc testnet, which is a friction point for adoption.</p>
+
+        <p>With Unified Balance Kit, the funding chain becomes invisible to the end user. A Grab driver in Medan with USDC on any supported chain can fund a salary stream to a family member — the SDK handles routing, the user just sees their total balance.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Before UBK</th>
+              <th>After UBK</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>User has USDC on Ethereum Sepolia</td>
+              <td>Bridge → approve → stream (3 steps, 2 UIs)</td>
+              <td class="good">deposit() → spend() → stream (1 SDK, 1 flow)</td>
+            </tr>
+            <tr>
+              <td>Check available balance</td>
+              <td>Query each chain separately</td>
+              <td class="good">getBalances() returns unified total</td>
+            </tr>
+            <tr>
+              <td>Fee estimate before signing</td>
+              <td>Guess from gas estimators</td>
+              <td class="good">estimateSpend() — exact preview offchain</td>
+            </tr>
+            <tr>
+              <td>Multi-chain USDC consolidation</td>
+              <td>Manual CCTP + routing logic</td>
+              <td class="good">Kit handles abstraction automatically</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+        <h2>What I'm Still Figuring Out</h2>
+
+        <p>The integration is working on testnet, but there are two open questions I'd love input on from other builders:</p>
+
+        <p><strong>1. Pending balance UX.</strong> When a user deposits from a source chain, there's a finalization window before the unified balance is credited. <code>includePending: true</code> returns the pending amount, but how are other builders handling the in-between state in their UI — showing a spinner, a countdown, or something else?</p>
+
+        <p><strong>2. Partial allocation.</strong> The <code>spend()</code> call lets you specify <code>allocations</code> per chain within the unified balance. For StreamPay, I'm funding from Arc only — but for cross-corridor streams (e.g., sender on Sepolia, recipient cashes out on Arc), what's the optimal allocation strategy?</p>
+
+        <p>If you're building with Unified Balance Kit and have run into either of these, let me know in the comments. Happy to share the full StreamPay + UBK integration code as a reference repo.</p>
+
+        <hr>
+
+        <p style="color: #8b949e; font-size: 0.9rem;">
+          <em>Community contribution from Medan, Indonesia — April 2026</em>
+        </p>
+      </article>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="side-title">// SDK Reference</div>
+        <div class="side-item"><span class="si-dot">▸</span> <code>kit.deposit()</code> — fund from any chain</div>
+        <div class="side-item"><span class="si-dot">▸</span> <code>kit.depositFor()</code> — fund on behalf of another address</div>
+        <div class="side-item"><span class="si-dot">▸</span> <code>kit.getBalances()</code> — chain-agnostic view</div>
+        <div class="side-item"><span class="si-dot">▸</span> <code>kit.estimateSpend()</code> — fee preview offchain</div>
+        <div class="side-item"><span class="si-dot">▸</span> <code>kit.spend()</code> — execute spend to any destination</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// Critical: Decimal Safety</div>
+        <div class="side-item"><span class="si-dot">▸</span> UBK amounts → human string <code>"10.00"</code></div>
+        <div class="side-item"><span class="si-dot">▸</span> StreamPay contract → 6-decimal int <code>10_000_000</code></div>
+        <div class="side-item"><span class="si-dot">▸</span> Convert: <code>ethers.parseUnits(amount, 6)</code></div>
+        <div class="side-item"><span class="si-dot">▸</span> Never use <code>parseEther</code> — off by 10¹²</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// Links</div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://www.arc.network/blog/unified-balance-kit-one-integration-for-unified-usdc-flows" target="_blank">UBK announcement post ↗</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://docs.arc.network/arc/tutorials/access-usdc-crosschain" target="_blank">Access USDC Crosschain docs ↗</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://testnet.arcscan.app/address/0x46937C3663101b3fE7F282A49F397d1f5C17a54B" target="_blank">StreamPay on Arc explorer ↗</a></div>
+        <div class="side-item"><span class="si-dot">▸</span> <a href="https://faucet.circle.com" target="_blank">Circle testnet faucet ↗</a></div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// Open Questions</div>
+        <div class="side-item"><span class="si-dot">▸</span> Best UX for pending deposit state?</div>
+        <div class="side-item"><span class="si-dot">▸</span> Optimal chain allocation strategy for cross-corridor streams?</div>
+        <div class="side-item"><span class="si-dot">▸</span> Anyone else integrating UBK with a custom contract this week?</div>
+      </div>
+
+      <div class="side-card">
+        <div class="side-title">// tags</div>
+        <div class="side-item"><span class="si-dot">▸</span> Unified Balance Kit</div>
+        <div class="side-item"><span class="si-dot">▸</span> StreamPay</div>
+        <div class="side-item"><span class="si-dot">▸</span> Tutorial</div>
+        <div class="side-item"><span class="si-dot">▸</span> USDC</div>
+        <div class="side-item"><span class="si-dot">▸</span> Arc</div>
+        <div class="side-item"><span class="si-dot">▸</span> TypeScript</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
