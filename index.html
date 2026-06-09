@@ -441,15 +441,15 @@ in multiple blockchain testnets, focusing on stability and performance</p>
   <p class="hero-subtitle">Securing networks, building applications, and sharing insights about the decentralized web.</p>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-number">7+</div>
+      <div class="stat-number">—</div>
       <div class="stat-label">Networks Validated</div>
     </div>
     <div class="stat">
-      <div class="stat-number">4+</div>
+      <div class="stat-number">—</div>
       <div class="stat-label">Projects Built</div>
     </div>
     <div class="stat">
-      <div class="stat-number">10+</div>
+      <div class="stat-number">—</div>
       <div class="stat-label">Blog Posts</div>
     </div>
   </div>
@@ -594,6 +594,50 @@ in multiple blockchain testnets, focusing on stability and performance</p>
     </a>
   </div>
 </section>
-  
+
+<script>
+  // Auto-update hero stats by counting items from each section
+  async function updateStats() {
+    const cacheBuster = '?_=' + Date.now();
+    const setStat = (label, value) => {
+      document.querySelectorAll('.stat').forEach(stat => {
+        const statLabel = stat.querySelector('.stat-label');
+        const statNumber = stat.querySelector('.stat-number');
+        if (statLabel && statNumber && statLabel.textContent.trim() === label) {
+          statNumber.textContent = value;
+        }
+      });
+    };
+
+    // Networks Validated — count from this page
+    const networkCount = document.querySelectorAll('.projects-container .project').length;
+    setStat('Networks Validated', networkCount + '+');
+
+    // Projects Built — fetch builder-projects index and count cards
+    try {
+      const res = await fetch('/builder-projects/index.html' + cacheBuster, { cache: 'no-store' });
+      const text = await res.text();
+      const doc = new DOMParser().parseFromString(text, 'text/html');
+      const count = doc.querySelectorAll('.project-card').length;
+      if (count > 0) setStat('Projects Built', count + '+');
+    } catch (e) {
+      console.log('Could not fetch projects count:', e);
+    }
+
+    // Blog Posts — fetch blog index and count cards
+    try {
+      const res = await fetch('/blog/index.html' + cacheBuster, { cache: 'no-store' });
+      const text = await res.text();
+      const doc = new DOMParser().parseFromString(text, 'text/html');
+      const count = doc.querySelectorAll('.blog-post').length;
+      if (count > 0) setStat('Blog Posts', count + '+');
+    } catch (e) {
+      console.log('Could not fetch blog count:', e);
+    }
+  }
+
+  updateStats();
+</script>
+
 </body>
 </html>
