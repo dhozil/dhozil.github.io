@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patchwork Truth - Narrative Game on GenLayer - DhoziL Validator</title>
+  <link rel="icon" href="/dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .featured-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0 32px 0;
+    object-fit: cover;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .feature-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .feature-box h3 {
+    color: #3fb950;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .visit-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(63, 185, 80, 0.3);
+    margin: 24px 0;
+  }
+
+  .visit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(63, 185, 80, 0.4);
+  }
+
+  .github-note {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    text-align: center;
+  }
+
+  .github-note h3 {
+    color: #d29922;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="/assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Builder Projects</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/builder-projects/" class="active">Builder Projects</a>
+    <a href="/blog/">Blog</a>
+  </nav>
+
+  <a href="/builder-projects/" class="back-link">Back to Builder Projects</a>
+
+  <article class="blog-post">
+    <h1>Patchwork Truth — A Narrative Game Judged by AI Consensus</h1>
+    <div class="meta">Released May 18, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Multiplayer Game</span> <span style="color: #8b949e;">AI Consensus</span> <span style="color: #8b949e;">Intelligent Contracts</span></div>
+
+    <img src="/assets/patchworth-truth.png" alt="Patchwork Truth" class="featured-image" onerror="this.style.display='none'">
+
+    <p>
+      <strong>Patchwork Truth</strong> is a competitive multiplayer narrative game where players build stories from scattered fragments and let an AI council decide whose argument is the strongest. Every score is reached on-chain through GenLayer's intelligent contracts — no human judge, no manipulation, just validators agreeing on what the LLM saw.
+    </p>
+
+    <hr>
+
+    <h2>The Idea</h2>
+
+    <p>Each room starts with a pool of 16 story fragments. Every player gets only 3 of them. Nobody has the full picture, so players have to negotiate, share clues, and write contributions that fit their pieces into a believable larger story. At the end, the host crafts the final draft and ships it off to the AI council for judging.</p>
+
+    <p>The twist: the council isn't a single AI. It's a group of GenLayer validator nodes that each run the evaluation prompt independently and have to reach consensus on the score. If they disagree too much, the transaction reverts. The result feels less like asking ChatGPT for an opinion and more like presenting your case to a jury that can't be bribed.</p>
+
+    <hr>
+
+    <h2>Key Features</h2>
+
+    <div class="feature-box">
+      <h3>AI Council Scoring</h3>
+      <p>Narratives are judged across four dimensions on a 0–100 scale: Coherence, Evidence Integration, Argument Quality, and Manipulation Resistance. The full breakdown shows up after consensus is reached.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Disjoint Fragment System</h3>
+      <p>Players never see all fragments. Negotiation is required to assemble the full story, which makes every game feel different even on the same scenario.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>8 Scenario Themes</h3>
+      <p>Each scenario brings its own evidence pool — mystery investigations, corporate incidents, historical events, technical incidents, and more.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Challenge Window</h3>
+      <p>Don't agree with the AI's score? You can challenge it. Successful challenges earn bonus XP, which keeps players honest and the council accountable.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>On-chain Leaderboard</h3>
+      <p>Two tracking modes: highest score in a single game, and total accumulated XP across all games played. All scores live on-chain through the intelligent contract.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Room Lifecycle</h3>
+      <p>Hosts create rooms with shareable codes, control phase advancement, and can destroy rooms when they're done. Non-hosts can leave anytime without breaking the game state.</p>
+    </div>
+
+    <hr>
+
+    <h2>Game Flow</h2>
+
+    <ul>
+      <li><strong>Lobby</strong> — Host creates a room and shares a join code with friends.</li>
+      <li><strong>Fragment Distribution</strong> — Each player draws 3 random fragments from the scenario's pool.</li>
+      <li><strong>Negotiation</strong> — Players write contributions based on what they have, hint at what they think others have.</li>
+      <li><strong>Final Draft</strong> — Host weaves everything into a single narrative and submits it for evaluation.</li>
+      <li><strong>AI Evaluation</strong> — GenLayer validators reach consensus on the four-dimension score.</li>
+      <li><strong>Challenge Window</strong> — Players review the score and can challenge anything that feels off.</li>
+      <li><strong>Results</strong> — Final rankings and per-player scores revealed.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Why GenLayer?</h2>
+
+    <p>Traditional smart contracts can't make subjective decisions. They can compute, transfer, and verify, but they can't read a paragraph and tell you whether the argument holds together. GenLayer's intelligent contracts can — they call LLMs natively, then use Optimistic Democracy to make sure every validator agrees on the answer.</p>
+
+    <p>That's exactly what a game like Patchwork Truth needs. The whole point is that the verdict is unbiased, reproducible, and resistant to one rogue player or one bad model run. Putting the scoring logic on-chain means nobody — not even me as the developer — can quietly tip the scales.</p>
+
+    <hr>
+
+    <div style="text-align: center;">
+      <a href="https://patchwork-truth-one.vercel.app" class="visit-button" target="_blank">Play Patchwork Truth</a>
+    </div>
+
+    <hr>
+
+    <div class="github-note">
+      <h3>Source Code</h3>
+      <p>Full source on GitHub:</p>
+      <p style="margin-top: 12px;">
+        <a href="https://github.com/dhozil/patchwork-truth" target="_blank">https://github.com/dhozil/patchwork-truth</a>
+      </p>
+    </div>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>Built by <strong>dhozil</strong> on GenLayer Studionet</em>
+    </p>
+  </article>
+
+</body>
+</html>

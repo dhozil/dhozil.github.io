@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zilarc - Decentralized Exchange on Arc Network - DhoziL Validator</title>
+  <link rel="icon" href="/dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .featured-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0 32px 0;
+    object-fit: cover;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .feature-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .feature-box h3 {
+    color: #3fb950;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .visit-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(63, 185, 80, 0.3);
+    margin: 24px 0;
+  }
+
+  .visit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(63, 185, 80, 0.4);
+  }
+
+  .github-note {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    text-align: center;
+  }
+
+  .github-note h3 {
+    color: #d29922;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="/assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Builder Projects</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/builder-projects/" class="active">Builder Projects</a>
+    <a href="/blog/">Blog</a>
+  </nav>
+
+  <a href="/builder-projects/" class="back-link">Back to Builder Projects</a>
+
+  <article class="blog-post">
+    <h1>Zilarc — Decentralized Exchange on Arc Network</h1>
+    <div class="meta">Released June 9, 2026 • Tags: <span style="color: #8b949e;">Arc Network</span> <span style="color: #8b949e;">DEX</span> <span style="color: #8b949e;">DeFi</span> <span style="color: #8b949e;">CCTP Bridge</span></div>
+
+    <img src="/assets/zilarc.png" alt="Zilarc DEX" class="featured-image" onerror="this.style.display='none'">
+
+    <p>
+      <strong>Zilarc</strong> is a decentralized exchange built natively on Arc Network, designed around Circle's stablecoin stack. It brings together single-call AMM swaps, liquidity provision across ten constant-product pools, and cross-chain USDC bridging through Circle's CCTP — all in one clean interface.
+    </p>
+
+    <hr>
+
+    <h2>What It Does</h2>
+
+    <p>Most DEX experiences on testnet feel like a chore. Approve, wait, swap, wait again, then realize the route was wrong. Zilarc collapses that into a single transaction. The router handles approvals, native USDC routing, and slippage checks internally — your wallet sees one signature, and the swap goes through.</p>
+
+    <p>On top of that, Zilarc plugs directly into Circle's Cross-Chain Transfer Protocol, so users can bridge USDC between Arc and seven other testnets without leaving the app.</p>
+
+    <hr>
+
+    <h2>Key Features</h2>
+
+    <div class="feature-box">
+      <h3>Single-Transaction Swaps</h3>
+      <p>One click, one signature. The router handles every step internally — including token approvals, native USDC routing, slippage enforcement, and deadline checks. No more chains of pop-ups for what should be a single action.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Multi-Token Trading</h3>
+      <p>Trade across native USDC (Arc precompile), EURC, and the Zilarc-native tokens Z, NEON, and JETT. Every pair runs on a constant-product AMM with a 0.3% fee.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Liquidity Pools</h3>
+      <p>Add or remove liquidity across ten pools. USDC pools accept native gas through msg.value, while ERC-20 pairs follow the standard approve and transferFrom flow. LP positions earn fees from every swap routed through the pool.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Cross-Chain USDC Bridge</h3>
+      <p>Powered by Circle CCTP, the bridge moves USDC between Arc and seven other testnets — Sepolia, Arbitrum, Base, Optimism, Polygon Amoy, Avalanche Fuji, and Linea Sepolia. Live quotes and one-click bridging built in.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Live On-Chain Stats</h3>
+      <p>Home and pool pages aggregate TVL, 24-hour volume, trade count, and APY directly from on-chain pool reserves and Swap event logs. Everything refreshes every 30 seconds — no centralized backend, no stale data.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Native USDC Support</h3>
+      <p>Arc treats USDC as a first-class native token. Zilarc takes full advantage — USDC pools route through the Arc precompile, so swaps feel just like sending native gas.</p>
+    </div>
+
+    <hr>
+
+    <h2>Pages</h2>
+
+    <ul>
+      <li><strong>Home</strong> — Live stats dashboard with TVL, volume, and the top markets.</li>
+      <li><strong>Swap</strong> — Trade any supported pair with built-in slippage protection and deadline enforcement.</li>
+      <li><strong>Pool</strong> — Browse all ten pools, see real reserves, and add or remove liquidity.</li>
+      <li><strong>Bridge</strong> — Move USDC across chains via Circle CCTP, with live quotes and one-click execution.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Why Arc?</h2>
+
+    <p>Arc was built from the ground up for stablecoin-native finance. USDC is treated as a first-class citizen — gas paid in stablecoin, sub-second finality, and a precompile that lets contracts move USDC like ETH on Ethereum. That changes the calculus for a DEX. Trades settle the moment you click. Per-swap costs are predictable, denominated in USDC, and small enough that micro-trades actually make sense.</p>
+
+    <p>Zilarc is what a DEX looks like when those constraints are gone. The single-transaction architecture isn't a UX trick — it's only possible because Arc gives you the speed and stable gas pricing to pull it off without burning users' funds on failed approvals.</p>
+
+    <hr>
+
+    <div style="text-align: center;">
+      <a href="https://www.zilarc.web.id/" class="visit-button" target="_blank">Visit Zilarc</a>
+    </div>
+
+    <hr>
+
+    <div class="github-note">
+      <h3>Source Code</h3>
+      <p>Full source on GitHub:</p>
+      <p style="margin-top: 12px;">
+        <a href="https://github.com/dhozil/zilarc" target="_blank">https://github.com/dhozil/zilarc</a>
+      </p>
+    </div>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>Built by <strong>dhozil</strong> for Arc Network Testnet</em>
+    </p>
+  </article>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glyphwright - Spell Crafting Game on GenLayer - DhoziL Validator</title>
+  <link rel="icon" href="/dhozil.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    color: #e6edf3;
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    line-height: 1.8;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .header img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+      0 0 20px rgba(0, 240, 255, 0.4),
+      0 0 40px rgba(0, 240, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .header img:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow:
+      0 0 30px rgba(0, 240, 255, 0.6),
+      0 0 60px rgba(0, 240, 255, 0.4);
+  }
+
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #58a6ff 0%, #00f0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header-text p {
+    margin: 8px 0 0 0;
+    color: #8b949e;
+    font-size: 1rem;
+  }
+
+  .nav {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #30363d;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .nav a {
+    color: #58a6ff;
+    text-decoration: none;
+    margin-right: 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: rgba(88, 166, 255, 0.1);
+    text-decoration: none;
+  }
+
+  .nav a.active {
+    background: rgba(88, 166, 255, 0.15);
+    color: #00f0ff;
+  }
+
+  .blog-post {
+    background: linear-gradient(145deg, #161b22 0%, #1c2128 100%);
+    padding: 48px;
+    border-radius: 16px;
+    border: 1px solid #30363d;
+    animation: fadeIn 0.6s ease 0.2s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #58a6ff, #00f0ff);
+  }
+
+  .blog-post h1 {
+    color: #58a6ff;
+    margin: 0 0 16px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .blog-post .meta {
+    color: #8b949e;
+    font-size: 0.9rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+  }
+
+  .featured-image {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px 0 32px 0;
+    object-fit: cover;
+  }
+
+  .blog-post p {
+    margin-bottom: 24px;
+    color: #c9d1d9;
+    line-height: 1.8;
+    font-size: 1.05rem;
+  }
+
+  .blog-post h2 {
+    color: #e6edf3;
+    margin: 48px 0 24px 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+
+  .blog-post h3 {
+    color: #e6edf3;
+    margin: 36px 0 16px 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .blog-post a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .blog-post a:hover {
+    color: #00f0ff;
+    text-decoration: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    animation: fadeIn 0.6s ease 0.1s backwards;
+  }
+
+  .back-link:hover {
+    background: rgba(88, 166, 255, 0.1);
+    gap: 12px;
+  }
+
+  .back-link::before {
+    content: '←';
+  }
+
+  .blog-post hr {
+    border: none;
+    border-top: 1px solid #30363d;
+    margin: 40px 0;
+  }
+
+  .blog-post ul {
+    margin-bottom: 24px;
+    padding-left: 24px;
+    color: #c9d1d9;
+  }
+
+  .blog-post li {
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  .feature-box {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    border-left: 4px solid #3fb950;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 12px 12px 0;
+    font-size: 1rem;
+    color: #c9d1d9;
+  }
+
+  .feature-box h3 {
+    color: #3fb950;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  .visit-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #3fb950 0%, #2ea043 100%);
+    color: #ffffff;
+    padding: 16px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(63, 185, 80, 0.3);
+    margin: 24px 0;
+  }
+
+  .visit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(63, 185, 80, 0.4);
+  }
+
+  .github-note {
+    background: linear-gradient(135deg, #21262d 0%, #30363d 100%);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 12px;
+    border: 1px solid #30363d;
+    text-align: center;
+  }
+
+  .github-note h3 {
+    color: #d29922;
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding: 24px 16px;
+    }
+
+    .header {
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .header-text h1 {
+      font-size: 2rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      margin-right: 0;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+
+    .blog-post {
+      padding: 24px;
+    }
+
+    .blog-post h1 {
+      font-size: 1.75rem;
+    }
+
+    .blog-post h2 {
+      font-size: 1.5rem;
+    }
+
+    .blog-post h3 {
+      font-size: 1.25rem;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="/assets/logo.png" alt="Validator Logo">
+    <div class="header-text">
+      <h1>dhozil</h1>
+      <p>Builder Projects</p>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="/">Home</a>
+    <a href="/builder-projects/" class="active">Builder Projects</a>
+    <a href="/blog/">Blog</a>
+  </nav>
+
+  <a href="/builder-projects/" class="back-link">Back to Builder Projects</a>
+
+  <article class="blog-post">
+    <h1>Glyphwright — Forge Spells in Plain Language, Judged by an AI Council</h1>
+    <div class="meta">Released June 8, 2026 • Tags: <span style="color: #8b949e;">GenLayer</span> <span style="color: #8b949e;">Game</span> <span style="color: #8b949e;">AI Council</span> <span style="color: #8b949e;">NFT Marketplace</span></div>
+
+    <img src="/assets/glyphwright.png" alt="Glyphwright" class="featured-image" onerror="this.style.display='none'">
+
+    <p>
+      <strong>Glyphwright</strong> is an arcane crafting game where players write the intent of a spell in plain language, and a council of five AI validators argue, vote, and decide whether it deserves to exist. Approved spells become tradeable glyphs in your on-chain grimoire, ready to be listed on an open marketplace.
+    </p>
+
+    <hr>
+
+    <h2>The Idea</h2>
+
+    <p>You don't pick from a menu of pre-made spells. You write the intent — something like "a whisper that makes someone forget the last sentence they spoke" — and the council takes it from there. Each of the five validator personas judges your spell with their own personality and bias. If at least 60% approve, your spell is forged: it gets a name, an incantation, lore, stats, and a permanent home in your grimoire.</p>
+
+    <p>What makes it different from "type a prompt, get an NFT" is the council itself. Five distinct AI personas — Pyromancer Ignis, Verdant Sage Liora, Voidcaller Nyx, Runesmith Borr, and Oracle Sephielle — each weigh in with their own voice, then have to reach consensus on the result. The score isn't decided by one model run. It's decided by validators agreeing on what the council collectively saw.</p>
+
+    <hr>
+
+    <h2>Key Features</h2>
+
+    <div class="feature-box">
+      <h3>Natural-Language Spell Crafting</h3>
+      <p>Write the intent of your spell in plain English. The AI council generates the full realization — name, incantation, lore, and stats — based on what you described.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Five-Validator AI Council</h3>
+      <p>Each persona judges across power, mana cost, element, rarity, and approval. Their votes happen in a single LLM round and are reconciled by GenLayer's consensus engine.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>60% Approval Threshold</h3>
+      <p>A spell is only forged if at least three of five validators approve. Stats are averaged, element and rarity are decided by majority vote — no single validator can dictate the outcome.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>On-Chain Grimoire</h3>
+      <p>Every approved spell is minted into your personal grimoire, keyed to your wallet address. Spells are permanent, tradeable, and provable on-chain.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Native GEN Marketplace</h3>
+      <p>List any spell from your grimoire for sale in native GEN. Buyers pay in one transaction — ownership and payment transfer atomically. Sellers can delist anytime.</p>
+    </div>
+
+    <div class="feature-box">
+      <h3>Mystical UI with Rarity Tiers</h3>
+      <p>Each spell card glows with its element's color and is ringed by its rarity tier. The whole interface leans into the arcane theme — runes, glyphs, and gradients designed to feel like an actual spellbook.</p>
+    </div>
+
+    <hr>
+
+    <h2>Pages</h2>
+
+    <ul>
+      <li><strong>Landing</strong> — Hero, feature overview, and the gateway into the game.</li>
+      <li><strong>The Forge</strong> — Where you write spell intents, watch the council deliberate, and mint the winning spells.</li>
+      <li><strong>Your Grimoire</strong> — Collection view of every spell you've forged, with the option to list any of them on the market.</li>
+      <li><strong>Glyph Market</strong> — Browse all listings from every player, buy spells with native GEN, or manage your own active listings.</li>
+    </ul>
+
+    <hr>
+
+    <h2>Why GenLayer's Optimistic Democracy?</h2>
+
+    <p>Most onchain games either pre-define everything (boring) or hand creation off to a centralized server (defeats the point). Glyphwright sits in the middle — players generate something genuinely new each time, but the result is judged and recorded by validators that no single party controls.</p>
+
+    <p>Optimistic Democracy is what makes the AI council possible. Each validator runs the same prompt, the network compares their outputs, and the consensus result is what gets written to chain. It means the game's verdicts are reproducible and resistant to manipulation, while still leaving room for the kind of subjective judgment that makes magic feel like magic.</p>
+
+    <hr>
+
+    <div style="text-align: center;">
+      <a href="https://glyphwright.vercel.app/" class="visit-button" target="_blank">Enter Glyphwright</a>
+    </div>
+
+    <hr>
+
+    <div class="github-note">
+      <h3>Source Code</h3>
+      <p>Full source on GitHub:</p>
+      <p style="margin-top: 12px;">
+        <a href="https://github.com/dhozil/glyphwright" target="_blank">https://github.com/dhozil/glyphwright</a>
+      </p>
+    </div>
+
+    <hr>
+
+    <p style="color: #8b949e; font-size: 0.9rem;">
+      <em>Built by <strong>dhozil</strong> on GenLayer Studionet</em>
+    </p>
+  </article>
+
+</body>
+</html>
